@@ -5,7 +5,7 @@ Testimonial Collector: a minimal freemium testimonial SaaS (testimonial.to-style
 Owners create Spaces, share a public link, collect testimonials, manage them in an
 Inbox, and embed them on any site. Free and Pro ($9.99/month) plans via Stripe.
 
-**Source of truth:** `docs/Testimonial Collector — MVP PRD.md` (requirements; the
+**Source of truth:** `docs/PRD.md` (requirements; the
 schema is in its section 4). Read the relevant PRD section before starting any
 feature. If the PRD and the code disagree, tell me instead of silently choosing.
 

@@ -150,3 +150,7 @@ vite.config.ts.timestamp-*
 
 # Prisma generated client
 lib/generated/
+
+# Next.js
+next-env.d.ts
+.vercel
