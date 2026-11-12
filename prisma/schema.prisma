@@ -1,0 +1,179 @@
+// Testimonial Collector — database schema.
+// Source of truth: docs/data-model.md (derived from PRD section 4).
+// Auth tables (Session, Account, Verification) and the Better Auth columns on
+// User are required by Better Auth's Prisma adapter.
+
+generator client {
+  provider = "prisma-client"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ---------------------------------------------------------------------------
+// Enums (PostgreSQL)
+// ---------------------------------------------------------------------------
+
+enum Plan {
+  free
+  pro
+}
+
+enum Theme {
+  light
+  dark
+  sunset
+  ocean
+}
+
+enum EmbedStyle {
+  masonry
+  carousel
+}
+
+enum EmbedSource {
+  wall_of_love
+  all_visible
+}
+
+// ---------------------------------------------------------------------------
+// User (Better Auth core table extended with the PRD fields)
+// ---------------------------------------------------------------------------
+
+model User {
+  id                   String    @id @default(cuid())
+  name                 String
+  email                String    @unique
+  emailVerified        Boolean   @default(false)
+  image                String?
+  plan                 Plan      @default(free)
+  stripeCustomerId     String?   @unique
+  stripeSubscriptionId String?   @unique
+  subscriptionStatus   String?
+  currentPeriodEnd     DateTime?
+  createdAt            DateTime  @default(now())
+  updatedAt            DateTime  @updatedAt
+
+  sessions Session[]
+  accounts Account[]
+  spaces   Space[]
+}
+
+// ---------------------------------------------------------------------------
+// Better Auth tables
+// ---------------------------------------------------------------------------
+
+model Session {
+  id        String   @id
+  userId    String
+  token     String   @unique
+  expiresAt DateTime
+  ipAddress String?
+  userAgent String?
+  createdAt DateTime
+  updatedAt DateTime
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@index([userId])
+}
+
+model Account {
+  id                    String    @id
+  userId                String
+  accountId             String
+  providerId            String
+  password              String?
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  createdAt             DateTime
+  updatedAt             DateTime
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@unique([providerId, accountId])
+  @@index([userId])
+}
+
+model Verification {
+  id         String   @id
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime
+  updatedAt  DateTime
+
+  @@index([identifier])
+}
+
+// ---------------------------------------------------------------------------
+// Application tables
+// ---------------------------------------------------------------------------
+
+model Space {
+  id            String   @id @default(cuid())
+  ownerId       String
+  slug          String   @unique
+  name          String
+  title         String
+  subtitle      String
+  ask           String
+  collectRating Boolean  @default(true)
+  theme         Theme    @default(light)
+  // Ordered form-field config, see docs/data-model.md section 5.
+  fields        Json     @default("[{\"key\":\"name\",\"enabled\":true,\"required\":true},{\"key\":\"email\",\"enabled\":true,\"required\":true},{\"key\":\"company\",\"enabled\":false,\"required\":false},{\"key\":\"socialLink\",\"enabled\":false,\"required\":false},{\"key\":\"photo\",\"enabled\":false,\"required\":false}]")
+  createdAt     DateTime @default(now())
+
+  owner        User          @relation(fields: [ownerId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  testimonials Testimonial[]
+  embedConfig  EmbedConfig?
+
+  @@index([ownerId, createdAt])
+}
+
+model Testimonial {
+  id             String   @id @default(cuid())
+  spaceId        String
+  name           String
+  email          String // never in public output
+  text           String   @db.VarChar(1000)
+  rating         Int? // 1-5, null when the space does not collect ratings
+  company        String?
+  socialLink     String?
+  photoUrl       String?
+  consentToShare Boolean // never in public output; public pages require true
+  isFavorite     Boolean  @default(false)
+  isWallOfLove   Boolean  @default(false)
+  isHidden       Boolean  @default(false)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  space Space @relation(fields: [spaceId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@index([spaceId, createdAt])
+  @@index([spaceId, isHidden, consentToShare])
+  @@index([spaceId, isWallOfLove])
+}
+
+model EmbedConfig {
+  id              String      @id @default(cuid())
+  spaceId         String      @unique
+  style           EmbedStyle  @default(masonry)
+  darkMode        Boolean     @default(false)
+  animation       Boolean     @default(true)
+  backgroundColor String      @default("#ffffff")
+  source          EmbedSource @default(all_visible)
+
+  space Space @relation(fields: [spaceId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+}
+
+model StripeEvent {
+  id          String   @id // the Stripe event id (evt_...)
+  processedAt DateTime @default(now())
+}
