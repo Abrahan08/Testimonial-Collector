@@ -29,6 +29,9 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           <Link href="/dashboard/spaces" className="text-sm text-muted-foreground hover:text-foreground">
             Spaces
           </Link>
+          <Link href="/dashboard/inbox" className="text-sm text-muted-foreground hover:text-foreground">
+            Inbox
+          </Link>
         </nav>
         <Suspense fallback={null}>
           <UserBar />
