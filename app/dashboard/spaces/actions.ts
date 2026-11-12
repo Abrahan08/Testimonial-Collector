@@ -92,7 +92,7 @@ export async function createSpaceAction(_prev: CreateSpaceState, formData: FormD
   }
   if (!id) return { formError: "Could not create the space. Please try again." };
 
-  revalidatePath("/dashboard/spaces");
+  revalidatePath("/dashboard/spaces", "layout");
   redirect(`/dashboard/spaces/${id}/created`);
 }
 
@@ -124,7 +124,7 @@ export async function updateSpaceAction(
   }
   if (count === 0) notFound();
 
-  revalidatePath("/dashboard/spaces");
+  revalidatePath("/dashboard/spaces", "layout");
   redirect("/dashboard/spaces?updated=1");
 }
 
@@ -147,6 +147,6 @@ export async function deleteSpaceAction(input: { id: string; confirmName: string
   }
 
   await db.space.deleteMany({ where: { id: space.id, ownerId: user.id } });
-  revalidatePath("/dashboard/spaces");
+  revalidatePath("/dashboard/spaces", "layout");
   return {};
 }
