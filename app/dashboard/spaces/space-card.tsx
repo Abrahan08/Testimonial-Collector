@@ -1,4 +1,5 @@
-import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { DeleteSpaceButton } from "./delete-space-dialog";
 
@@ -36,10 +37,9 @@ export function SpaceCard({ id, name, testimonialCount, publicUrl, createdAt }: 
         </dl>
         <p className="text-xs break-all text-muted-foreground">{publicUrl}</p>
         <div className="flex gap-2">
-          {/* Placeholder until the edit page exists. */}
-          <Button variant="outline" size="sm" disabled>
+          <Link href={`/dashboard/spaces/${id}/edit`} className={buttonVariants({ variant: "outline", size: "sm" })}>
             Edit
-          </Button>
+          </Link>
           <DeleteSpaceButton id={id} name={name} />
         </div>
       </CardContent>

@@ -42,7 +42,17 @@ async function SpaceList() {
   );
 }
 
-export default function SpacesPage() {
+async function UpdatedBanner({ searchParams }: { searchParams: Promise<{ updated?: string }> }) {
+  const { updated } = await searchParams;
+  if (updated !== "1") return null;
+  return (
+    <p role="status" className="rounded-lg border border-primary/30 bg-primary/10 p-3 text-sm">
+      Space updated.
+    </p>
+  );
+}
+
+export default function SpacesPage({ searchParams }: { searchParams: Promise<{ updated?: string }> }) {
   return (
     <main className="mx-auto flex w-full max-w-5xl flex-col gap-6">
       <div className="flex items-center justify-between">
@@ -51,6 +61,9 @@ export default function SpacesPage() {
           New space
         </Link>
       </div>
+      <Suspense fallback={null}>
+        <UpdatedBanner searchParams={searchParams} />
+      </Suspense>
       <Suspense fallback={<p className="text-sm text-muted-foreground">Loading...</p>}>
         <SpaceList />
       </Suspense>

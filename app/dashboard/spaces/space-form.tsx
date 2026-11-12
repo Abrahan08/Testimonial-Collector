@@ -1,7 +1,8 @@
 "use client";
 
 import { useActionState, useState } from "react";
-import { createSpaceAction, type CreateSpaceState } from "../actions";
+import { createSpaceAction, updateSpaceAction, type CreateSpaceState } from "./actions";
+import { PublicFormView } from "@/components/space/public-form-view";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -20,31 +21,76 @@ const OPTIONAL_FIELDS = [
 type OptionalKey = (typeof OPTIONAL_FIELDS)[number]["key"];
 type FieldState = Record<OptionalKey, { enabled: boolean; required: boolean }>;
 
-export function SpaceForm() {
-  const [state, action, pending] = useActionState(createSpaceAction, initial);
-  const errors = state.fieldErrors ?? {};
+export type SpaceFormInitial = {
+  name: string;
+  title: string;
+  subtitle: string;
+  ask: string;
+  collectRating: boolean;
+  theme: ThemeKey;
+  fields: FieldState;
+};
 
-  // Controlled so typed values survive a failed submit.
-  const [text, setText] = useState({ name: "", title: "", subtitle: "", ask: "" });
-  const [collectRating, setCollectRating] = useState(true);
-  const [theme, setTheme] = useState<ThemeKey>("light");
-  const [fields, setFields] = useState<FieldState>({
+const DEFAULTS: SpaceFormInitial = {
+  name: "",
+  title: "",
+  subtitle: "",
+  ask: "",
+  collectRating: true,
+  theme: "light",
+  fields: {
     company: { enabled: false, required: false },
     socialLink: { enabled: false, required: false },
     photo: { enabled: false, required: false },
-  });
+  },
+};
+
+type Props = { mode?: "create" } | { mode: "edit"; spaceId: string; slug: string; initial: SpaceFormInitial };
+
+export function SpaceForm(props: Props) {
+  const edit = props.mode === "edit" ? props : null;
+  const [state, action, pending] = useActionState(
+    edit ? updateSpaceAction.bind(null, edit.spaceId) : createSpaceAction,
+    initial,
+  );
+  const errors = state.fieldErrors ?? {};
+  const start = edit ? edit.initial : DEFAULTS;
+
+  // Controlled so typed values survive a failed submit. The preview reads this same state.
+  const [text, setText] = useState({ name: start.name, title: start.title, subtitle: start.subtitle, ask: start.ask });
+  const [collectRating, setCollectRating] = useState(start.collectRating);
+  const [theme, setTheme] = useState<ThemeKey>(start.theme);
+  const [fields, setFields] = useState<FieldState>(start.fields);
+
+  const previewFields = [
+    { key: "name", enabled: true, required: true },
+    { key: "email", enabled: true, required: true },
+    ...OPTIONAL_FIELDS.map(({ key }) => ({ key, ...fields[key] })),
+  ];
 
   const setT = (k: keyof typeof text) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
     setText((t) => ({ ...t, [k]: e.target.value }));
 
   return (
-    <Card className="w-full max-w-2xl">
+    <div className="grid w-full items-start gap-6 lg:grid-cols-2">
+    <Card className="w-full">
       <CardHeader>
-        <CardTitle>Create a space</CardTitle>
-        <CardDescription>A space has one public link where customers leave testimonials.</CardDescription>
+        <CardTitle>{edit ? "Edit space" : "Create a space"}</CardTitle>
+        <CardDescription>
+          {edit
+            ? "Turning a field off only hides it on the form. Collected testimonials keep their data."
+            : "A space has one public link where customers leave testimonials."}
+        </CardDescription>
       </CardHeader>
       <CardContent>
         <form action={action} className="flex flex-col gap-5" noValidate>
+          {edit && (
+            <div className="flex flex-col gap-1.5">
+              <Label htmlFor="slug">Public link slug</Label>
+              <Input id="slug" value={edit.slug} readOnly disabled />
+              <p className="text-xs text-muted-foreground">The slug can&apos;t be changed, so shared links never break.</p>
+            </div>
+          )}
           <div className="flex flex-col gap-1.5">
             <Label htmlFor="name">Space name</Label>
             <Input id="name" name="name" value={text.name} onChange={setT("name")} aria-invalid={!!errors.name} />
@@ -158,11 +204,23 @@ export function SpaceForm() {
           )}
 
           <Button type="submit" disabled={pending}>
-            {pending ? "Creating..." : "Create space"}
+            {edit ? (pending ? "Saving..." : "Save changes") : pending ? "Creating..." : "Create space"}
           </Button>
         </form>
       </CardContent>
     </Card>
+    <div className="flex flex-col gap-2 lg:sticky lg:top-6">
+      <p className="text-sm font-medium">Live preview</p>
+      <PublicFormView
+        title={text.title}
+        subtitle={text.subtitle}
+        ask={text.ask}
+        collectRating={collectRating}
+        theme={theme}
+        fields={previewFields}
+      />
+    </div>
+    </div>
   );
 }
 

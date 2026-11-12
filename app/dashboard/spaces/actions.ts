@@ -1,13 +1,13 @@
 "use server";
 
-import { redirect } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { db } from "@/lib/db";
 import { Prisma } from "@/lib/generated/prisma/client";
 import { canCreateSpace } from "@/lib/limits";
 import { requireUser } from "@/lib/session";
 import { generateSlug } from "@/lib/slug";
-import { FIELD_KEYS, createSpaceSchema, deleteSpaceSchema } from "@/lib/validators/space";
+import { FIELD_KEYS, createSpaceSchema, deleteSpaceSchema, updateSpaceSchema } from "@/lib/validators/space";
 
 export type CreateSpaceState = {
   fieldErrors?: Partial<Record<"name" | "title" | "subtitle" | "ask" | "theme" | "fields", string[]>>;
@@ -35,12 +35,9 @@ function readFields(formData: FormData) {
   });
 }
 
-const MAX_SLUG_ATTEMPTS = 5;
-
-export async function createSpaceAction(_prev: CreateSpaceState, formData: FormData): Promise<CreateSpaceState> {
-  const user = await requireUser();
-
-  const parsed = createSpaceSchema.safeParse({
+// Only these form keys are ever read, so slug/ownerId in a forged submission are ignored.
+function readSpaceForm(formData: FormData) {
+  return {
     name: str(formData, "name"),
     title: str(formData, "title"),
     subtitle: str(formData, "subtitle"),
@@ -48,7 +45,15 @@ export async function createSpaceAction(_prev: CreateSpaceState, formData: FormD
     collectRating: formData.get("collectRating") === "on",
     theme: str(formData, "theme"),
     fields: readFields(formData),
-  });
+  };
+}
+
+const MAX_SLUG_ATTEMPTS = 5;
+
+export async function createSpaceAction(_prev: CreateSpaceState, formData: FormData): Promise<CreateSpaceState> {
+  const user = await requireUser();
+
+  const parsed = createSpaceSchema.safeParse(readSpaceForm(formData));
   if (!parsed.success) {
     return { fieldErrors: parsed.error.flatten().fieldErrors };
   }
@@ -91,7 +96,39 @@ export async function createSpaceAction(_prev: CreateSpaceState, formData: FormD
   redirect(`/dashboard/spaces/${id}/created`);
 }
 
-export type DeleteSpaceState = { error?: string; notFound?: boolean };
+// Bound with the space id in the form: updateSpaceAction.bind(null, id).
+export async function updateSpaceAction(
+  spaceId: string,
+  _prev: CreateSpaceState,
+  formData: FormData,
+): Promise<CreateSpaceState> {
+  const user = await requireUser();
+
+  const parsed = updateSpaceSchema.safeParse(readSpaceForm(formData));
+  if (!parsed.success) {
+    return { fieldErrors: parsed.error.flatten().fieldErrors };
+  }
+
+  // Explicit field list: slug and ownerId can never be written here. Turning a
+  // field off only edits the `fields` JSON; testimonials are not touched.
+  const { name, title, subtitle, ask, collectRating, theme, fields } = parsed.data;
+  let count = 0;
+  try {
+    // Scoped by owner: someone else's id looks the same as a missing one.
+    ({ count } = await db.space.updateMany({
+      where: { id: spaceId, ownerId: user.id },
+      data: { name, title, subtitle, ask, collectRating, theme, fields },
+    }));
+  } catch {
+    return { formError: "Could not save the space. Please try again." };
+  }
+  if (count === 0) notFound();
+
+  revalidatePath("/dashboard/spaces");
+  redirect("/dashboard/spaces?updated=1");
+}
+
+export type DeleteSpaceState ={ error?: string; notFound?: boolean };
 
 export async function deleteSpaceAction(input: { id: string; confirmName: string }): Promise<DeleteSpaceState> {
   const user = await requireUser();

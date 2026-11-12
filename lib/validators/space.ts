@@ -42,6 +42,11 @@ export const createSpaceSchema = z.object({
 
 export type CreateSpaceInput = z.infer<typeof createSpaceSchema>;
 
+// Same fields as create. Strict, so a smuggled slug or ownerId is rejected
+// instead of silently ignored: those two are immutable.
+export const updateSpaceSchema = createSpaceSchema.strict();
+export type UpdateSpaceInput = z.infer<typeof updateSpaceSchema>;
+
 export const deleteSpaceSchema = z.object({
   id: z.string().min(1),
   confirmName: z.string(),

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { DEFAULT_FIELDS, createSpaceSchema, spaceFieldsSchema } from "./space";
+import { DEFAULT_FIELDS, createSpaceSchema, spaceFieldsSchema, updateSpaceSchema } from "./space";
 
 type F = { key: string; enabled: boolean; required: boolean };
 const fields = (): F[] => DEFAULT_FIELDS.map((f) => ({ ...f }));
@@ -59,5 +59,30 @@ describe("createSpaceSchema", () => {
   it("rejects unknown theme and too-long name", () => {
     expect(createSpaceSchema.safeParse({ ...valid(), theme: "neon" }).success).toBe(false);
     expect(createSpaceSchema.safeParse({ ...valid(), name: "a".repeat(81) }).success).toBe(false);
+  });
+});
+
+describe("updateSpaceSchema", () => {
+  it("accepts valid input and trims", () => {
+    const r = updateSpaceSchema.safeParse({ ...valid(), title: "  Hello  " });
+    expect(r.success && r.data.title).toBe("Hello");
+  });
+
+  it("rejects empty name, title and ask", () => {
+    for (const key of ["name", "title", "ask"] as const) {
+      expect(updateSpaceSchema.safeParse({ ...valid(), [key]: "   " }).success).toBe(false);
+    }
+  });
+
+  it("rejects unknown theme and unlocked name or email", () => {
+    expect(updateSpaceSchema.safeParse({ ...valid(), theme: "neon" }).success).toBe(false);
+    const f = fields();
+    f[0] = { key: "name", enabled: true, required: false };
+    expect(updateSpaceSchema.safeParse({ ...valid(), fields: f }).success).toBe(false);
+  });
+
+  it("rejects slug and ownerId (immutable)", () => {
+    expect(updateSpaceSchema.safeParse({ ...valid(), slug: "other" }).success).toBe(false);
+    expect(updateSpaceSchema.safeParse({ ...valid(), ownerId: "someone-else" }).success).toBe(false);
   });
 });
