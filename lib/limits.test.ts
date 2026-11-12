@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { canCreateSpace } from "./limits";
+import { canAcceptTestimonial, canCreateSpace } from "./limits";
 
 describe("canCreateSpace", () => {
   it("free: allows below 3, blocks at and above 3", () => {
@@ -11,5 +11,18 @@ describe("canCreateSpace", () => {
   it("pro: allows below 25, blocks at 25", () => {
     expect(canCreateSpace("pro", 24)).toBe(true);
     expect(canCreateSpace("pro", 25)).toBe(false);
+  });
+});
+
+describe("canAcceptTestimonial", () => {
+  it("free: allows below 100, blocks at and above 100", () => {
+    expect(canAcceptTestimonial("free", 0)).toBe(true);
+    expect(canAcceptTestimonial("free", 99)).toBe(true);
+    expect(canAcceptTestimonial("free", 100)).toBe(false);
+    expect(canAcceptTestimonial("free", 101)).toBe(false);
+  });
+  it("pro: allows below 1000, blocks at 1000", () => {
+    expect(canAcceptTestimonial("pro", 999)).toBe(true);
+    expect(canAcceptTestimonial("pro", 1000)).toBe(false);
   });
 });

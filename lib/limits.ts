@@ -4,3 +4,10 @@ import { PLAN_LIMITS, type PlanKey } from "@/lib/plans";
 export function canCreateSpace(plan: PlanKey, currentSpaceCount: number): boolean {
   return currentSpaceCount < PLAN_LIMITS[plan].spaces;
 }
+
+// Pure check: may a space owned by someone on `plan` with `currentCount` testimonials accept another?
+export function canAcceptTestimonial(plan: PlanKey, currentCount: number): boolean {
+  return currentCount < PLAN_LIMITS[plan].testimonialsPerSpace;
+}
+
+export const CLOSED_MESSAGE = "This space isn't accepting testimonials right now";
