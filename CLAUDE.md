@@ -89,5 +89,8 @@ For each feature: **plan, then implement, then verify.**
 - Do not mark a task done until lint, typecheck, and tests pass.
 - When finished, list what is done and what is not.
 
+
+After finishing a feature, run git diff --name-only and pass those paths to the security-reviewer subagent. Fix its findings before reporting done.
+
 ## Definition of Done
 See PRD section 9 and the states table in section 5.9.
