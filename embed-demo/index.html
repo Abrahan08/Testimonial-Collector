@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Embed demo</title>
+    <style>
+      body { font-family: system-ui, sans-serif; max-width: 960px; margin: 0 auto; padding: 24px; }
+      h2 { margin-top: 40px; }
+      code { background: #f4f4f5; padding: 2px 6px; border-radius: 4px; }
+    </style>
+  </head>
+  <body>
+    <h1>Embed demo</h1>
+    <p>
+      Opened from <code>file://</code>, so every embed below is cross-origin. Start the app
+      (<code>npm run dev</code>) and replace <code>SLUG</code> and the host in both snippets with
+      your space's slug and your APP_URL.
+    </p>
+
+    <h2>1. Script snippet</h2>
+    <!-- Replace SLUG with your space's slug (from the builder at /dashboard/embed). -->
+    <script
+      src="http://localhost:3000/embed.js"
+      data-space="SLUG"
+      data-style="masonry"
+      data-dark="false"
+      data-animation="true"
+      data-bg="#ffffff"
+    ></script>
+
+    <h2>2. iframe snippet</h2>
+    <!-- Replace SLUG with your space's slug. The iframe does not auto-resize; set a height. -->
+    <iframe
+      src="http://localhost:3000/embed/SLUG?style=carousel&dark=false&animation=true&bg=ffffff"
+      width="100%"
+      height="420"
+      style="border:0"
+    ></iframe>
+  </body>
+</html>

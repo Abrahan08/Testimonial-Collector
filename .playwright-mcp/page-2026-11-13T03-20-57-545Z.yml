@@ -1,0 +1,66 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - banner [ref=e3]:
+      - navigation [ref=e4]:
+        - link "Testimonial Collector" [ref=e5] [cursor=pointer]:
+          - /url: /dashboard
+        - link "Spaces" [ref=e6] [cursor=pointer]:
+          - /url: /dashboard/spaces
+        - link "Inbox" [ref=e7] [cursor=pointer]:
+          - /url: /dashboard/inbox
+      - generic [ref=e8]:
+        - generic [ref=e9]: Embed Tester
+        - button "Log out" [ref=e11]
+    - main [ref=e13]:
+      - heading "Embed" [level=1] [ref=e14]
+      - generic [ref=e15]:
+        - generic [ref=e16]:
+          - generic [ref=e17]: Space
+          - combobox "Space" [ref=e18]:
+            - option "Embed QA" [selected]
+        - region "Settings" [ref=e19]:
+          - generic [ref=e20]:
+            - text: Style
+            - combobox "Style" [ref=e21]:
+              - option "Masonry" [selected]
+              - option "Carousel"
+          - generic [ref=e22]:
+            - text: Source
+            - combobox "Source" [ref=e23]:
+              - option "Wall of Love only"
+              - option "All visible testimonials" [selected]
+          - generic [ref=e24]:
+            - switch "Dark mode" [ref=e25] [cursor=pointer]
+            - generic [ref=e26]: Dark mode
+          - generic [ref=e27]:
+            - switch "Animation" [checked] [ref=e28] [cursor=pointer]
+            - generic [ref=e29]: Animation
+          - generic [ref=e30]:
+            - generic [ref=e31]: Background color
+            - generic [ref=e32]:
+              - textbox "Background color picker" [ref=e33] [cursor=pointer]: "#1a1a2e"
+              - textbox "Background color" [ref=e34]: "#1a1a2e"
+        - generic [ref=e35]:
+          - button "Save" [ref=e36]
+          - status [ref=e91]: Saved
+        - region "Live preview" [ref=e37]:
+          - heading "Preview" [level=2] [ref=e38]
+          - figure "Ada Lovelace" [ref=e76]:
+            - generic [ref=e77]:
+              - generic [aria-hidden] [ref=e78]: AL
+              - paragraph [ref=e80]: Ada Lovelace
+            - img "5 out of 5 stars" [ref=e81]: ★★★★★
+            - blockquote [ref=e82]: Great! <img src=x onerror=alert(1)> <b>bold</b>
+        - region "Snippets" [ref=e52]:
+          - generic [ref=e53]:
+            - generic [ref=e54]:
+              - heading "JavaScript snippet" [level=2] [ref=e55]
+              - button "Copy" [ref=e56]
+            - code [ref=e58]: <script src="http://localhost:3001/embed.js" data-space="embed-qa-gyy4we" data-style="masonry" data-dark="false" data-animation="true" data-bg="#1a1a2e"></script>
+          - generic [ref=e59]:
+            - generic [ref=e60]:
+              - heading "iframe snippet" [level=2] [ref=e61]
+              - button "Copy" [ref=e62]
+            - code [ref=e64]: <iframe src="http://localhost:3001/embed/embed-qa-gyy4we?style=masonry&dark=false&animation=true&bg=1a1a2e" width="100%" style="border:0"></iframe>
+  - button "Open Next.js Dev Tools" [ref=e70] [cursor=pointer]
+  - alert [ref=e74]: Testimonial Collector
