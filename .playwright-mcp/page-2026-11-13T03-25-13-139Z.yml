@@ -1,0 +1,100 @@
+- generic [active] [ref=f2e1]:
+  - generic [ref=f2e13]:
+    - banner [ref=f2e14]:
+      - navigation [ref=f2e15]:
+        - link "Testimonial Collector" [ref=f2e16] [cursor=pointer]:
+          - /url: /dashboard
+        - link "Spaces" [ref=f2e17] [cursor=pointer]:
+          - /url: /dashboard/spaces
+        - link "Inbox" [ref=f2e18] [cursor=pointer]:
+          - /url: /dashboard/inbox
+      - generic [ref=f2e19]:
+        - generic [ref=f2e20]: Demo Tester
+        - button "Log out" [ref=f2e22]
+    - main [ref=f2e24]:
+      - heading "Overview" [level=1] [ref=f2e25]
+      - note [ref=f2e26]:
+        - generic [ref=f2e27]: Upgrade to Pro for 25 spaces and 1,000 testimonials per space
+        - link "Upgrade" [ref=f2e28] [cursor=pointer]:
+          - /url: /dashboard/billing
+      - generic [ref=f2e29]:
+        - generic [ref=f2e30]:
+          - text: Space
+          - combobox "Space" [ref=f2e31]:
+            - option "All spaces" [selected]
+            - option "Demo Tester"
+        - generic [ref=f2e32]:
+          - text: Range
+          - combobox "Range" [ref=f2e33]:
+            - option "Last 7 days"
+            - option "Last 30 days" [selected]
+            - option "Last 90 days"
+        - generic [ref=f2e34]:
+          - text: Granularity
+          - combobox "Granularity" [ref=f2e35]:
+            - option "Day" [selected]
+            - option "Week"
+            - option "Month"
+        - button "Apply" [ref=f2e36]
+      - region "Counters" [ref=f2e37]:
+        - generic [ref=f2e38]:
+          - paragraph [ref=f2e39]: Testimonials
+          - paragraph [ref=f2e40]: "1"
+        - generic [ref=f2e41]:
+          - paragraph [ref=f2e42]: Unique customers
+          - paragraph [ref=f2e43]: "1"
+        - generic [ref=f2e44]:
+          - paragraph [ref=f2e45]: Spaces
+          - paragraph [ref=f2e46]: "1"
+        - generic [ref=f2e47]:
+          - paragraph [ref=f2e48]: Average rating
+          - paragraph [ref=f2e49]: "4.0"
+        - generic [ref=f2e50]:
+          - paragraph [ref=f2e51]: Favorites
+          - paragraph [ref=f2e52]: "0"
+        - generic [ref=f2e53]:
+          - paragraph [ref=f2e54]: Wall of love
+          - paragraph [ref=f2e55]: "0"
+      - generic [ref=f2e56]:
+        - heading "Testimonials collected" [level=2] [ref=f2e57]
+        - img "Testimonials collected over time" [ref=f2e58]:
+          - application [ref=f2e61]:
+            - generic [ref=f2e79]:
+              - generic [ref=f2e80]:
+                - generic [ref=f2e81]: Oct 16
+                - generic [ref=f2e83]: Oct 18
+                - generic [ref=f2e85]: Oct 20
+                - generic [ref=f2e87]: Oct 22
+                - generic [ref=f2e89]: Oct 24
+                - generic [ref=f2e91]: Oct 26
+                - generic [ref=f2e93]: Oct 28
+                - generic [ref=f2e95]: Oct 30
+                - generic [ref=f2e97]: Nov 1
+                - generic [ref=f2e99]: Nov 3
+                - generic [ref=f2e101]: Nov 5
+                - generic [ref=f2e103]: Nov 7
+                - generic [ref=f2e105]: Nov 9
+                - generic [ref=f2e107]: Nov 11
+                - generic [ref=f2e109]: Nov 13
+              - generic [ref=f2e111]:
+                - generic [ref=f2e112]: "0"
+                - generic [ref=f2e114]: "1"
+                - generic [ref=f2e116]: "2"
+                - generic [ref=f2e118]: "3"
+                - generic [ref=f2e120]: "4"
+      - generic [ref=f2e122]:
+        - generic [ref=f2e123]:
+          - heading "Plan usage" [level=2] [ref=f2e124]
+          - paragraph [ref=f2e125]: 1 of 3 spaces
+        - generic [ref=f2e128]:
+          - heading "Recent submissions" [level=2] [ref=f2e129]
+          - list [ref=f2e130]:
+            - listitem [ref=f2e131]:
+              - generic [ref=f2e132]:
+                - paragraph [ref=f2e133]: Embed QA
+                - paragraph [ref=f2e134]: Demo Tester · 4/5 · 11/12/2026
+              - link "View in inbox" [ref=f2e135] [cursor=pointer]:
+                - /url: /dashboard/inbox?space=cmwdgii2t0000ucyv6c41muvm
+  - button "Open Next.js Dev Tools" [ref=f2e8] [cursor=pointer]
+  - alert [ref=f2e12]: Overview
+  - generic [aria-hidden] [ref=f2e136]: "0"

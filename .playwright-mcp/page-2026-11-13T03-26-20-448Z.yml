@@ -1,0 +1,102 @@
+- generic [active] [ref=f10e1]:
+  - generic [ref=f10e2]:
+    - banner [ref=f10e3]:
+      - navigation [ref=f10e4]:
+        - link "Testimonial Collector" [ref=f10e5] [cursor=pointer]:
+          - /url: /dashboard
+        - link "Spaces" [ref=f10e6] [cursor=pointer]:
+          - /url: /dashboard/spaces
+        - link "Inbox" [ref=f10e7] [cursor=pointer]:
+          - /url: /dashboard/inbox
+      - generic [ref=f10e8]:
+        - generic [ref=f10e9]: Demo Tester
+        - button "Log out" [ref=f10e11]
+    - main [ref=f10e13]:
+      - heading "Overview" [level=1] [ref=f10e14]
+      - note [ref=f10e15]:
+        - generic [ref=f10e16]: Upgrade to Pro for 25 spaces and 1,000 testimonials per space
+        - link "Upgrade" [ref=f10e17] [cursor=pointer]:
+          - /url: /dashboard/billing
+      - generic [ref=f10e18]:
+        - generic [ref=f10e19]:
+          - text: Space
+          - combobox "Space" [ref=f10e20]:
+            - option "All spaces" [selected]
+            - option "Demo space 3"
+            - option "Demo space 2"
+            - option "Demo Tester"
+        - generic [ref=f10e21]:
+          - text: Range
+          - combobox "Range" [ref=f10e22]:
+            - option "Last 7 days"
+            - option "Last 30 days" [selected]
+            - option "Last 90 days"
+        - generic [ref=f10e23]:
+          - text: Granularity
+          - combobox "Granularity" [ref=f10e24]:
+            - option "Day" [selected]
+            - option "Week"
+            - option "Month"
+        - button "Apply" [ref=f10e25]
+      - region "Counters" [ref=f10e26]:
+        - generic [ref=f10e27]:
+          - paragraph [ref=f10e28]: Testimonials
+          - paragraph [ref=f10e29]: "1"
+        - generic [ref=f10e30]:
+          - paragraph [ref=f10e31]: Unique customers
+          - paragraph [ref=f10e32]: "1"
+        - generic [ref=f10e33]:
+          - paragraph [ref=f10e34]: Spaces
+          - paragraph [ref=f10e35]: "3"
+        - generic [ref=f10e36]:
+          - paragraph [ref=f10e37]: Average rating
+          - paragraph [ref=f10e38]: "4.0"
+        - generic [ref=f10e39]:
+          - paragraph [ref=f10e40]: Favorites
+          - paragraph [ref=f10e41]: "0"
+        - generic [ref=f10e42]:
+          - paragraph [ref=f10e43]: Wall of love
+          - paragraph [ref=f10e44]: "0"
+      - generic [ref=f10e45]:
+        - heading "Testimonials collected" [level=2] [ref=f10e46]
+        - img "Testimonials collected over time" [ref=f10e47]:
+          - application [ref=f10e50]:
+            - generic [ref=f10e61]:
+              - generic [ref=f10e62]:
+                - generic [ref=f10e63]: Oct 16
+                - generic [ref=f10e65]: Oct 18
+                - generic [ref=f10e67]: Oct 20
+                - generic [ref=f10e69]: Oct 22
+                - generic [ref=f10e71]: Oct 24
+                - generic [ref=f10e73]: Oct 26
+                - generic [ref=f10e75]: Oct 28
+                - generic [ref=f10e77]: Oct 30
+                - generic [ref=f10e79]: Nov 1
+                - generic [ref=f10e81]: Nov 3
+                - generic [ref=f10e83]: Nov 5
+                - generic [ref=f10e85]: Nov 7
+                - generic [ref=f10e87]: Nov 9
+                - generic [ref=f10e89]: Nov 11
+                - generic [ref=f10e91]: Nov 13
+              - generic [ref=f10e93]:
+                - generic [ref=f10e94]: "0"
+                - generic [ref=f10e96]: "1"
+                - generic [ref=f10e98]: "2"
+                - generic [ref=f10e100]: "3"
+                - generic [ref=f10e102]: "4"
+      - generic [ref=f10e104]:
+        - generic [ref=f10e105]:
+          - heading "Plan usage" [level=2] [ref=f10e106]
+          - paragraph [ref=f10e107]: 3 of 3 spaces
+        - generic [ref=f10e110]:
+          - heading "Recent submissions" [level=2] [ref=f10e111]
+          - list [ref=f10e112]:
+            - listitem [ref=f10e113]:
+              - generic [ref=f10e114]:
+                - paragraph [ref=f10e115]: Embed QA
+                - paragraph [ref=f10e116]: Demo Tester · 4/5 · 11/12/2026
+              - link "View in inbox" [ref=f10e117] [cursor=pointer]:
+                - /url: /dashboard/inbox?space=cmwdgii2t0000ucyv6c41muvm
+  - button "Open Next.js Dev Tools" [ref=f10e123] [cursor=pointer]
+  - alert [ref=f10e127]
+  - generic [aria-hidden] [ref=f10e128]: "0"

@@ -1,0 +1,40 @@
+- generic [active] [ref=f11e1]:
+  - generic [ref=f11e2]:
+    - banner [ref=f11e3]:
+      - navigation [ref=f11e4]:
+        - link "Testimonial Collector" [ref=f11e5] [cursor=pointer]:
+          - /url: /dashboard
+        - link "Spaces" [ref=f11e6] [cursor=pointer]:
+          - /url: /dashboard/spaces
+        - link "Inbox" [ref=f11e7] [cursor=pointer]:
+          - /url: /dashboard/inbox
+      - generic [ref=f11e8]:
+        - generic [ref=f11e9]: Demo Tester
+        - button "Log out" [ref=f11e11]
+    - main [ref=f11e13]:
+      - heading "Billing" [level=1] [ref=f11e14]
+      - note [ref=f11e25]: "Demo billing: no real payments are made."
+      - status [ref=f11e67]: Upgrade complete. Your Pro limits are active now.
+      - region "Subscription" [ref=f11e68]:
+        - heading "You're on Pro" [level=2] [ref=f11e69]
+        - paragraph [ref=f11e70]: Renews on December 13, 2026
+        - button "Cancel subscription (demo)" [ref=f11e72]
+      - generic [ref=f11e26]:
+        - generic [ref=f11e27]:
+          - generic [ref=f11e28]:
+            - generic [ref=f11e29]: Free
+            - generic [ref=f11e31]: $0
+          - list [ref=f11e33]:
+            - listitem [ref=f11e34]: 3 spaces
+            - listitem [ref=f11e35]: 100 testimonials per space
+        - generic [ref=f11e36]:
+          - generic [ref=f11e37]:
+            - generic [ref=f11e38]:
+              - text: Pro
+              - generic [ref=f11e73]: Current plan
+            - generic [ref=f11e39]: $9.99/month
+          - list [ref=f11e41]:
+            - listitem [ref=f11e42]: 25 spaces
+            - listitem [ref=f11e43]: 1,000 testimonials per space
+  - button "Open Next.js Dev Tools" [ref=f11e20] [cursor=pointer]
+  - alert [ref=f11e24]: Billing

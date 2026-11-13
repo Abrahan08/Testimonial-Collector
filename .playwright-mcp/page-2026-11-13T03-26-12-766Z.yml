@@ -1,0 +1,101 @@
+- generic [active] [ref=f9e1]:
+  - generic [ref=f9e2]:
+    - banner [ref=f9e3]:
+      - navigation [ref=f9e4]:
+        - link "Testimonial Collector" [ref=f9e5] [cursor=pointer]:
+          - /url: /dashboard
+        - link "Spaces" [ref=f9e6] [cursor=pointer]:
+          - /url: /dashboard/spaces
+        - link "Inbox" [ref=f9e7] [cursor=pointer]:
+          - /url: /dashboard/inbox
+      - generic [ref=f9e8]:
+        - generic [ref=f9e9]: Demo Tester
+        - button "Log out" [ref=f9e11]
+    - main [ref=f9e13]:
+      - generic [ref=f9e14]:
+        - generic [ref=f9e15]:
+          - generic [ref=f9e16]:
+            - generic [ref=f9e17]: Create a space
+            - generic [ref=f9e18]: A space has one public link where customers leave testimonials.
+          - generic [ref=f9e20]:
+            - generic [ref=f9e21]:
+              - generic [ref=f9e22]: Space name
+              - textbox "Space name" [ref=f9e23]
+            - generic [ref=f9e24]:
+              - generic [ref=f9e25]: Title
+              - textbox "Title" [ref=f9e26]
+            - generic [ref=f9e27]:
+              - generic [ref=f9e28]: Subtitle
+              - textbox "Subtitle" [ref=f9e29]
+            - generic [ref=f9e30]:
+              - generic [ref=f9e31]: Ask
+              - textbox "Ask" [ref=f9e32]
+            - generic [ref=f9e33]:
+              - generic [ref=f9e34]: Collect rating (1-5 stars)
+              - switch "Collect rating (1-5 stars)" [checked] [ref=f9e35] [cursor=pointer]
+            - group "Form fields" [ref=f9e36]:
+              - generic [ref=f9e38]:
+                - generic [ref=f9e39]: Show
+                - generic [ref=f9e40]: Required
+                - generic [ref=f9e41]:
+                  - generic [ref=f9e42]: Name (always on)
+                  - switch "Name shown (locked)" [checked] [disabled] [ref=f9e43]
+                  - switch "Name required (locked)" [checked] [disabled] [ref=f9e44]
+                - generic [ref=f9e45]:
+                  - generic [ref=f9e46]: Email (always on)
+                  - switch "Email shown (locked)" [checked] [disabled] [ref=f9e47]
+                  - switch "Email required (locked)" [checked] [disabled] [ref=f9e48]
+                - generic [ref=f9e49]:
+                  - generic [ref=f9e50]: Company
+                  - switch "Show Company" [ref=f9e51] [cursor=pointer]
+                  - switch "Company required" [disabled] [ref=f9e52]
+                - generic [ref=f9e53]:
+                  - generic [ref=f9e54]: Social link
+                  - switch "Show Social link" [ref=f9e55] [cursor=pointer]
+                  - switch "Social link required" [disabled] [ref=f9e56]
+                - generic [ref=f9e57]:
+                  - generic [ref=f9e58]: Profile photo
+                  - switch "Show Profile photo" [ref=f9e59] [cursor=pointer]
+                  - switch "Profile photo required" [disabled] [ref=f9e60]
+            - group "Theme" [ref=f9e61]:
+              - generic [ref=f9e63]:
+                - generic [ref=f9e64] [cursor=pointer]:
+                  - radio "Light" [checked] [ref=f9e65]
+                  - generic [ref=f9e69]: Light
+                - generic [ref=f9e70] [cursor=pointer]:
+                  - radio "Dark" [ref=f9e71]
+                  - generic [ref=f9e75]: Dark
+                - generic [ref=f9e76] [cursor=pointer]:
+                  - radio "Sunset" [ref=f9e77]
+                  - generic [ref=f9e81]: Sunset
+                - generic [ref=f9e82] [cursor=pointer]:
+                  - radio "Ocean" [ref=f9e83]
+                  - generic [ref=f9e87]: Ocean
+            - button "Create space" [ref=f9e88]
+        - generic [ref=f9e89]:
+          - paragraph [ref=f9e90]: Live preview
+          - generic [ref=f9e91]:
+            - heading "Your title" [level=2] [ref=f9e93]
+            - generic [ref=f9e94]:
+              - generic [ref=f9e95]: Rating
+              - generic [aria-hidden] [ref=f9e96]:
+                - generic [ref=f9e97]: ★
+                - generic [ref=f9e98]: ★
+                - generic [ref=f9e99]: ★
+                - generic [ref=f9e100]: ★
+                - generic [ref=f9e101]: ★
+            - generic [ref=f9e102]:
+              - generic [ref=f9e103]: Name *
+              - textbox "Name" [disabled] [ref=f9e104]
+            - generic [ref=f9e105]:
+              - generic [ref=f9e106]: Email *
+              - textbox "Email" [disabled] [ref=f9e107]
+            - generic [ref=f9e108]:
+              - generic [ref=f9e109]: Your testimonial *
+              - textbox "Your testimonial" [disabled] [ref=f9e110]
+            - generic [ref=f9e111]:
+              - checkbox "I allow this testimonial to be shared publicly" [disabled] [ref=f9e112]
+              - generic [ref=f9e113]: I allow this testimonial to be shared publicly
+            - button "Submit" [disabled] [ref=f9e114]
+  - button "Open Next.js Dev Tools" [ref=f9e120] [cursor=pointer]
+  - alert [ref=f9e124]

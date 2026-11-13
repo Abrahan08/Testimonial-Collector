@@ -1,6 +1,7 @@
 "use client";
 
 import { useActionState, useState } from "react";
+import Link from "next/link";
 import { createSpaceAction, updateSpaceAction, type CreateSpaceState } from "./actions";
 import { PublicFormView } from "@/components/space/public-form-view";
 import { Button } from "@/components/ui/button";
@@ -200,6 +201,14 @@ export function SpaceForm(props: Props) {
           {state.formError && (
             <p role="alert" className="rounded-lg border border-destructive/40 bg-destructive/10 p-3 text-sm text-destructive">
               {state.formError}
+              {state.limitReached && (
+                <>
+                  {" "}
+                  <Link href="/dashboard/billing" className="font-medium underline">
+                    Upgrade to Pro
+                  </Link>
+                </>
+              )}
             </p>
           )}
 
