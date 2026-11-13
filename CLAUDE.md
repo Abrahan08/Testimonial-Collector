@@ -78,6 +78,7 @@ docs/                PRD.md (requirements), data-model.md (schema design)
 10. **Slugs are immutable.** Generated from the name (kebab-case, random suffix if
     taken) and never changed, so shared links never break.
 11. Keep changes small and focused: one feature or fix per branch and commit.
+12. UI styling follows docs/design.md and the CSS variables in app/globals.css. No hardcoded colors.
 
 ## Workflow
 For each feature: **plan, then implement, then verify.**
