@@ -66,15 +66,15 @@ Status comes from [docs/requirements-check.md](docs/requirements-check.md) (audi
 
 | Area | Status | Notes |
 | --- | --- | --- |
-| Auth | Partial | Done: sign up, log in, log out, unique email, protected `/dashboard/*`, password minimum, 30-day session. Not done: forgot/reset password, account settings (edit name, change password, delete account). |
-| Spaces | Partial | Done: create, edit with live preview, four themes, field configurator, success page with copy button, immutable slug, delete with typed confirmation. Not done: QR code (nice to have). |
-| Public page | Partial | Done: no login, validation, consent checkbox, funny confirmation, honeypot, per-IP rate limit, 1,000-character cap. Not done: profile photo upload. |
+| Auth | Partial | Done: sign up, log in, log out, unique email, protected `/dashboard/*`, password minimum, 30-day session. Not done (deliberately not built): password reset (forgot/reset by emailed link), account settings (edit name, change password, delete account). |
+| Spaces | Partial | Done: create, edit with live preview, four themes, field configurator, success page with copy button, immutable slug, delete with typed confirmation. Not done (deliberately not built): QR code on the success page (nice to have). |
+| Public page | Partial | Done: no login, validation, consent checkbox, funny confirmation, honeypot, per-IP rate limit, 1,000-character cap. Not done (deliberately not built): profile photo upload. |
 | Inbox | Done | Space selector, favorite, Wall of Love, edit, hide, delete, status filter, search, 20 per page. |
 | Dashboard | Done | Counters, time-series chart with filters, recent submissions, plan-usage meter, upgrade banner on Overview. |
 | Embed | Done | Builder with live preview, masonry and carousel, script and iframe snippets, `embed.js`, CORS, 60 s cache configured. |
 | Billing | Partial | Demo only: plans page, mock checkout, upgrade, cancel. See "Differences from the PRD". |
-| Limits | Partial | Done: Free and Pro limits enforced server-side, "Powered by" badge on Free, space-limit upgrade prompt, closed public page at the testimonial limit. Partial: after cancel, over-limit spaces are not made read-only (warning text only). |
-| Notifications and states | Partial | Done: empty states, inline field errors, retry on failed or rate-limited submit, error boundary. Partial: no toast library, unknown-slug 404 returns HTTP 200. Not done: photo upload failure message (no upload exists). |
+| Limits | Partial | Done: Free and Pro limits enforced server-side, "Powered by" badge on Free, space-limit upgrade prompt, closed public page at the testimonial limit. Not done (deliberately not built): read-only handling of over-limit spaces after cancel (the check marks it Partial: nothing is deleted and a warning text is shown). |
+| Notifications and states | Partial | Done: empty states, inline field errors, retry on failed or rate-limited submit, error boundary. Not done (deliberately not built): toast notifications (the check marks it Partial: inline messages exist for some actions), photo upload failure message (no upload exists). Partial: unknown-slug 404 returns HTTP 200. |
 
 ## Differences from the PRD
 
@@ -98,6 +98,7 @@ Other differences noted in the check:
 | Playwright MCP server | `.mcp.json` (stdio, `@playwright/mcp@latest`) | Drove a real browser to check the app. | About 198 calls in one usage window (author-reported). The requirements check lists five browser checks. Page snapshots are committed under `.playwright-mcp/` on `feat/embed` and `feat/billing`. |
 | security-reviewer subagent | `.claude/agents/security-reviewer.md` | Read-only reviewer (Read, Grep, Glob) for changed files. Checks `ownerId` scoping, server-side plan limits, Zod validation, leaks of emails, consent or hidden items in public output, and `dangerouslySetInnerHTML` on user content. | Findings per feature: none recorded. |
 | protect-files hook | `.claude/settings.json`, `.claude/hooks/protect-files.js` | PreToolUse hook that blocks edits to `.env*` files (except `.env.example`) and `prisma/migrations/`. Edit tools are checked by file path. Shell tools (Bash, PowerShell) get a conservative text scan of the command for those same paths. This is pattern matching, so indirect shell writes can slip through. | It blocked real edit attempts during normal work (author-reported). |
+| frontend-design plugin (Anthropic) | `.claude/settings.json` (`enabledPlugins`: `frontend-design@claude-code-plugins`) | Installed with `/plugin marketplace add anthropics/claude-code` and `/plugin install frontend-design@claude-code-plugins`. Used to choose the design direction ([docs/design.md](docs/design.md)) and apply the design tokens, fonts and shared component styles. | `docs/design.md`; the plugin is enabled in `.claude/settings.json`. |
 
 ## Parallel work
 
@@ -106,16 +107,35 @@ The embed builder and the mock billing were built at the same time in two git wo
 - `feat/embed` (`6ffd491`): `app/dashboard/embed/`, `app/embed/[slug]/`, `components/embed/`, `lib/embed-query.ts`, `lib/embed-snippets.ts`, `lib/validators/embed.ts` (with tests), `lib/urls.ts`, `next.config.ts`, `public/embed.js`, `embed-demo/index.html`.
 - `feat/billing` (`a14c59a`): `app/dashboard/billing/` (page, actions, cancel button, checkout), `lib/billing.ts` and its test, `app/dashboard/spaces/space-form.tsx`.
 
-Both were merged with `--no-ff`: `1d1fddf Merge feat/embed`, then `37fe8dc Merge feat/billing`. A later `5e25905 Merge fix/batch-a` merged the fixes that followed the requirements check.
+Both were merged with `--no-ff`: `1d1fddf Merge feat/embed`, then `37fe8dc Merge feat/billing`.
+
+Two more branches followed, next to `feat/embed` and `feat/billing`:
+
+- `fix/batch-a` (merge `5e25905 Merge fix/batch-a`): the fixes that followed the requirements check.
+- `design/ui` (merge `1ff5270 Merge design/ui`): the design work described below.
+
+## Design
+
+The direction is "Clear Signal" ([docs/design.md](docs/design.md)): crisp, calm, instrument-panel precision, with Bricolage Grotesque headings, Figtree body text and one blue accent defined as color tokens. Space themes style only the public page and the embed, never the dashboard.
+
+The `design/ui` branch was merged with `--no-ff`.
+
+Honest note: the design was applied at foundation level (fonts, color tokens, shared components, dashboard header). The landing, login, signup and public pages were not restyled one by one.
 
 ## Known limitations and not done
 
-- No forgot/reset password flow and no email provider, so a user who forgets a password is locked out.
-- No account settings: edit name, change password, delete account.
-- No profile photo upload (the photo switch in the space form has no effect) and no upload-failure message.
-- No QR code on the space success page.
-- No toast library; some actions (delete space, favorite, hide, Wall of Love) give no success feedback.
-- After cancelling Pro, over-limit spaces are not made read-only.
+These were deliberately not built (Not done):
+
+- Password reset: no forgot/reset flow and no email provider, so a user who forgets a password is locked out.
+- Account settings: edit name, change password, delete account.
+- Profile photo upload (the photo switch in the space form has no effect) and no upload-failure message.
+- Toast notifications: no toast library; some actions (delete space, favorite, hide, Wall of Love) give no success feedback.
+- QR code on the space success page.
+- Read-only handling over the limit after cancel: after cancelling Pro, over-limit spaces are not made read-only.
+
+Other gaps:
+
+
 - No Playwright specs and no webhook tests (there is no webhook).
 - Mobile viewport and browser console errors were not checked.
 - Only one meme GIF ships in `public/gifs/`.
