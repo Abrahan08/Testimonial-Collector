@@ -10,4 +10,9 @@ export function canAcceptTestimonial(plan: PlanKey, currentCount: number): boole
   return currentCount < PLAN_LIMITS[plan].testimonialsPerSpace;
 }
 
+// Pure check: is there a higher plan to move to? Decides whether a limit message links to Billing.
+export function canUpgrade(plan: PlanKey): boolean {
+  return plan === "free";
+}
+
 export const CLOSED_MESSAGE = "This space isn't accepting testimonials right now";

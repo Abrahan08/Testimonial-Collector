@@ -56,6 +56,7 @@ export function checkRateLimits(
   return true;
 }
 
-// Process-local store used by the submit action. Resets on restart and is not
-// shared across instances.
+// Process-local store used by the submit action. NOTE: this in-memory limiter resets
+// on every server restart or redeploy and is not shared across instances, so it only
+// slows down abuse. A shared store (e.g. Redis) would be needed for a hard guarantee.
 export const submissionStore: RateLimitStore = new Map();

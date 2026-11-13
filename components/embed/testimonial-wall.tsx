@@ -2,6 +2,7 @@
 
 import { useRef } from "react";
 import { initials } from "@/lib/inbox-query";
+import { APP_NAME } from "@/lib/powered-by";
 import type { EmbedStyleKey } from "@/lib/validators/embed";
 
 export type WallTestimonial = {
@@ -20,6 +21,8 @@ type Props = {
   bg: string;
   /** Shown when there is nothing to display. Omit to render nothing. */
   emptyMessage?: string;
+  /** Show the free-plan "Powered by" badge. Only rendered when there are testimonials. */
+  poweredBy?: boolean;
 };
 
 // Static CSS, no user content. Animations are CSS only and switched off for reduced motion.
@@ -45,6 +48,7 @@ const CSS = `
 .tcw-btn{cursor:pointer;border:1px solid var(--tcw-border);background:var(--tcw-card);color:var(--tcw-fg);border-radius:8px;padding:6px 12px;font:inherit;font-size:14px}
 .tcw-btn:focus-visible{outline:2px solid var(--tcw-fg);outline-offset:2px}
 .tcw-empty{margin:0;text-align:center;color:var(--tcw-muted);padding:24px 0}
+.tcw-badge{margin:8px 0 0;text-align:center;font-size:12px;color:var(--tcw-muted)}
 @keyframes tcw-in{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
 .tcw[data-animation="true"] .tcw-card{animation:tcw-in .5s ease both;animation-delay:calc(var(--i,0) * 60ms)}
 @media (prefers-reduced-motion:reduce){
@@ -84,7 +88,7 @@ function Card({ t, index }: { t: WallTestimonial; index: number }) {
   );
 }
 
-export function TestimonialWall({ testimonials, style, dark, animation, bg, emptyMessage }: Props) {
+export function TestimonialWall({ testimonials, style, dark, animation, bg, emptyMessage, poweredBy }: Props) {
   const trackRef = useRef<HTMLDivElement>(null);
 
   function scrollByCard(direction: 1 | -1) {
@@ -125,6 +129,12 @@ export function TestimonialWall({ testimonials, style, dark, animation, bg, empt
             <Card key={i} t={t} index={i} />
           ))}
         </div>
+      )}
+      {poweredBy && testimonials.length > 0 && (
+        // Inside .tcw so the iframe height reporter counts it.
+        <p className="tcw-badge" data-testid="powered-by">
+          Powered by {APP_NAME}
+        </p>
       )}
     </div>
   );

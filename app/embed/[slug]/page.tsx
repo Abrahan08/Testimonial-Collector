@@ -5,6 +5,7 @@ import { EmbedHeightReporter } from "@/components/embed/embed-height-reporter";
 import { TestimonialWall, type WallTestimonial } from "@/components/embed/testimonial-wall";
 import { db } from "@/lib/db";
 import { EMBED_LIMIT, EMBED_ORDER, EMBED_SELECT, buildEmbedWhere } from "@/lib/embed-query";
+import { shouldShowPoweredBy } from "@/lib/powered-by";
 import { parseEmbedParams, resolveEmbedOptions, type SavedEmbedConfig } from "@/lib/validators/embed";
 
 type SearchParams = Promise<Record<string, string | string[] | undefined>>;
@@ -14,7 +15,10 @@ function first(value: string | string[] | undefined) {
 }
 
 // Cached for ~60s per slug. Returns only public fields: no email, no consent flag, no ids.
-async function getEmbedData(slug: string): Promise<{ saved: SavedEmbedConfig | null; items: WallTestimonial[] } | null> {
+// Only a `showBadge` boolean derived from the owner's plan leaves this function, never the plan.
+async function getEmbedData(
+  slug: string,
+): Promise<{ saved: SavedEmbedConfig | null; items: WallTestimonial[]; showBadge: boolean } | null> {
   "use cache";
   cacheLife({ stale: 60, revalidate: 60, expire: 300 });
 
@@ -22,6 +26,7 @@ async function getEmbedData(slug: string): Promise<{ saved: SavedEmbedConfig | n
     where: { slug },
     select: {
       id: true,
+      owner: { select: { plan: true } },
       embedConfig: { select: { style: true, darkMode: true, animation: true, backgroundColor: true, source: true } },
     },
   });
@@ -45,6 +50,7 @@ async function getEmbedData(slug: string): Promise<{ saved: SavedEmbedConfig | n
         }
       : null,
     items: rows.map((r) => ({ name: r.name, company: r.company, rating: r.rating, text: r.text })),
+    showBadge: shouldShowPoweredBy(space.owner.plan),
   };
 }
 
@@ -79,6 +85,7 @@ async function EmbedContent({
         dark={options.dark}
         animation={options.animation}
         bg={options.bg}
+        poweredBy={data.showBadge}
       />
       <EmbedHeightReporter />
     </>

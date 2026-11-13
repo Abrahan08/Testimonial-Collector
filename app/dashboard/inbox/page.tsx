@@ -13,6 +13,8 @@ import {
   pickSpace,
   totalPages,
 } from "@/lib/inbox-query";
+import { canUpgrade } from "@/lib/limits";
+import { PLAN_LIMITS } from "@/lib/plans";
 import { requireUser } from "@/lib/session";
 import { publicSpaceUrl } from "@/lib/urls";
 import { PAGE_SIZE, inboxQuerySchema } from "@/lib/validators/inbox";
@@ -85,7 +87,8 @@ async function InboxContent({ searchParams }: { searchParams: SearchParams }) {
     },
   });
 
-  const warning = countWarning(owner?.plan ?? "free", spaceTotal);
+  const plan = owner?.plan ?? "free";
+  const warning = countWarning(plan, spaceTotal);
   const pages = totalPages(filteredTotal);
   const filtered = query.status !== "all" || query.q !== "";
 
@@ -107,6 +110,15 @@ async function InboxContent({ searchParams }: { searchParams: SearchParams }) {
           {warning.level === "full"
             ? `This space is full: ${warning.used} of ${warning.limit} testimonials used. It is not accepting new testimonials.`
             : `${warning.used} of ${warning.limit} testimonials used`}
+          {canUpgrade(plan) && (
+            <>
+              {" "}
+              <Link href="/dashboard/billing" className="font-medium underline">
+                Upgrade to Pro
+              </Link>{" "}
+              for up to {PLAN_LIMITS.pro.testimonialsPerSpace.toLocaleString("en-US")} per space.
+            </>
+          )}
         </p>
       )}
 
