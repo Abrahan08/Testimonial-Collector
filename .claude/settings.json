@@ -7,10 +7,15 @@
           {
             "type": "command",
             "command": "node",
-            "args": ["${CLAUDE_PROJECT_DIR}/.claude/hooks/protect-files.js"]
+            "args": [
+              "${CLAUDE_PROJECT_DIR}/.claude/hooks/protect-files.js"
+            ]
           }
         ]
       }
     ]
+  },
+  "enabledPlugins": {
+    "frontend-design@claude-code-plugins": true
   }
 }
