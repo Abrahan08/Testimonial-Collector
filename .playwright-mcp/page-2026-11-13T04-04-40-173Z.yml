@@ -1,0 +1,67 @@
+- generic [ref=f1e1]:
+  - generic [ref=f1e2]:
+    - banner [ref=f1e3]:
+      - navigation [ref=f1e4]:
+        - link "Testimonial Collector" [ref=f1e5] [cursor=pointer]:
+          - /url: /dashboard
+        - link "Dashboard" [ref=f1e6] [cursor=pointer]:
+          - /url: /dashboard
+        - link "Spaces" [ref=f1e7] [cursor=pointer]:
+          - /url: /dashboard/spaces
+        - link "Inbox" [ref=f1e8] [cursor=pointer]:
+          - /url: /dashboard/inbox
+        - link "Embed" [active] [ref=f1e9] [cursor=pointer]:
+          - /url: /dashboard/embed
+        - link "Billing" [ref=f1e10] [cursor=pointer]:
+          - /url: /dashboard/billing
+      - generic [ref=f1e11]:
+        - generic [ref=f1e12]: Throwaway Tester
+        - button "Log out" [ref=f1e14]
+    - main [ref=f1e249]:
+      - heading "Embed" [level=1] [ref=f1e250]
+      - generic [ref=f1e251]:
+        - generic [ref=f1e252]:
+          - generic [ref=f1e253]: Space
+          - combobox "Space" [ref=f1e254]:
+            - option "Verify Empty Space" [selected]
+            - option "PW Test Space"
+        - region "Settings" [ref=f1e255]:
+          - generic [ref=f1e256]:
+            - text: Style
+            - combobox "Style" [ref=f1e257]:
+              - option "Masonry" [selected]
+              - option "Carousel"
+          - generic [ref=f1e258]:
+            - text: Source
+            - combobox "Source" [ref=f1e259]:
+              - option "Wall of Love only"
+              - option "All visible testimonials" [selected]
+          - generic [ref=f1e260]:
+            - switch "Dark mode" [ref=f1e261] [cursor=pointer]
+            - generic [ref=f1e262]: Dark mode
+          - generic [ref=f1e263]:
+            - switch "Animation" [checked] [ref=f1e264] [cursor=pointer]
+            - generic [ref=f1e265]: Animation
+          - generic [ref=f1e266]:
+            - generic [ref=f1e267]: Background color
+            - generic [ref=f1e268]:
+              - textbox "Background color picker" [ref=f1e269] [cursor=pointer]: "#ffffff"
+              - textbox "Background color" [ref=f1e270]: "#ffffff"
+        - button "Save" [ref=f1e272]
+        - region "Live preview" [ref=f1e273]:
+          - heading "Preview" [level=2] [ref=f1e274]
+          - paragraph [ref=f1e277]: No testimonials yet
+        - region "Snippets" [ref=f1e278]:
+          - generic [ref=f1e279]:
+            - generic [ref=f1e280]:
+              - heading "JavaScript snippet" [level=2] [ref=f1e281]
+              - button "Copy" [ref=f1e282]
+            - code [ref=f1e284]: <script src="http://localhost:3000/embed.js" data-space="verify-empty-space-5f8y2e" data-style="masonry" data-dark="false" data-animation="true" data-bg="#ffffff"></script>
+          - generic [ref=f1e285]:
+            - generic [ref=f1e286]:
+              - heading "iframe snippet" [level=2] [ref=f1e287]
+              - button "Copy" [ref=f1e288]
+            - code [ref=f1e290]: <iframe src="http://localhost:3000/embed/verify-empty-space-5f8y2e?style=masonry&dark=false&animation=true&bg=ffffff" width="100%" style="border:0"></iframe>
+  - button "Open Next.js Dev Tools" [ref=f1e24] [cursor=pointer]
+  - alert [ref=f1e28]: Embed
+  - generic [aria-hidden] [ref=f1e192]: "0"

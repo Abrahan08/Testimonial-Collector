@@ -1,0 +1,131 @@
+- generic [ref=f1e1]:
+  - generic [ref=f1e2]:
+    - banner [ref=f1e3]:
+      - navigation [ref=f1e4]:
+        - link "Testimonial Collector" [ref=f1e5] [cursor=pointer]:
+          - /url: /dashboard
+        - link "Dashboard" [active] [ref=f1e6] [cursor=pointer]:
+          - /url: /dashboard
+        - link "Spaces" [ref=f1e7] [cursor=pointer]:
+          - /url: /dashboard/spaces
+        - link "Inbox" [ref=f1e8] [cursor=pointer]:
+          - /url: /dashboard/inbox
+        - link "Embed" [ref=f1e9] [cursor=pointer]:
+          - /url: /dashboard/embed
+        - link "Billing" [ref=f1e10] [cursor=pointer]:
+          - /url: /dashboard/billing
+      - generic [ref=f1e11]:
+        - generic [ref=f1e12]: Throwaway Tester
+        - button "Log out" [ref=f1e14]
+    - main [ref=f1e16]:
+      - heading "Overview" [level=1] [ref=f1e17]
+      - note [ref=f1e29]:
+        - generic [ref=f1e30]: Upgrade to Pro for 25 spaces and 1,000 testimonials per space
+        - link "Upgrade" [ref=f1e31] [cursor=pointer]:
+          - /url: /dashboard/billing
+      - generic [ref=f1e32]:
+        - generic [ref=f1e33]:
+          - text: Space
+          - combobox "Space" [ref=f1e34]:
+            - option "All spaces" [selected]
+            - option "Verify Empty Space"
+            - option "PW Test Space"
+        - generic [ref=f1e35]:
+          - text: Range
+          - combobox "Range" [ref=f1e36]:
+            - option "Last 7 days"
+            - option "Last 30 days" [selected]
+            - option "Last 90 days"
+        - generic [ref=f1e37]:
+          - text: Granularity
+          - combobox "Granularity" [ref=f1e38]:
+            - option "Day" [selected]
+            - option "Week"
+            - option "Month"
+        - button "Apply" [ref=f1e39]
+      - region "Counters" [ref=f1e40]:
+        - generic [ref=f1e41]:
+          - paragraph [ref=f1e42]: Testimonials
+          - paragraph [ref=f1e43]: "28"
+        - generic [ref=f1e44]:
+          - paragraph [ref=f1e45]: Unique customers
+          - paragraph [ref=f1e46]: "28"
+        - generic [ref=f1e47]:
+          - paragraph [ref=f1e48]: Spaces
+          - paragraph [ref=f1e49]: "2"
+        - generic [ref=f1e50]:
+          - paragraph [ref=f1e51]: Average rating
+          - paragraph [ref=f1e52]: "4.0"
+        - generic [ref=f1e53]:
+          - paragraph [ref=f1e54]: Favorites
+          - paragraph [ref=f1e55]: "5"
+        - generic [ref=f1e56]:
+          - paragraph [ref=f1e57]: Wall of love
+          - paragraph [ref=f1e58]: "6"
+      - generic [ref=f1e59]:
+        - heading "Testimonials collected" [level=2] [ref=f1e60]
+        - img "Testimonials collected over time" [ref=f1e61]:
+          - application [ref=f1e64]:
+            - generic [ref=f1e115]:
+              - generic [ref=f1e116]:
+                - generic [ref=f1e117]: Oct 16
+                - generic [ref=f1e119]: Oct 18
+                - generic [ref=f1e121]: Oct 20
+                - generic [ref=f1e123]: Oct 22
+                - generic [ref=f1e125]: Oct 24
+                - generic [ref=f1e127]: Oct 26
+                - generic [ref=f1e129]: Oct 28
+                - generic [ref=f1e131]: Oct 30
+                - generic [ref=f1e133]: Nov 1
+                - generic [ref=f1e135]: Nov 3
+                - generic [ref=f1e137]: Nov 5
+                - generic [ref=f1e139]: Nov 7
+                - generic [ref=f1e141]: Nov 9
+                - generic [ref=f1e143]: Nov 11
+                - generic [ref=f1e145]: Nov 13
+              - generic [ref=f1e147]:
+                - generic [ref=f1e148]: "0"
+                - generic [ref=f1e150]: "2"
+                - generic [ref=f1e152]: "4"
+                - generic [ref=f1e154]: "6"
+                - generic [ref=f1e156]: "8"
+      - generic [ref=f1e158]:
+        - generic [ref=f1e159]:
+          - heading "Plan usage" [level=2] [ref=f1e160]
+          - paragraph [ref=f1e161]: 2 of 3 spaces
+        - generic [ref=f1e164]:
+          - heading "Recent submissions" [level=2] [ref=f1e165]
+          - list [ref=f1e166]:
+            - listitem [ref=f1e167]:
+              - generic [ref=f1e168]:
+                - paragraph [ref=f1e169]: Ava Johnson
+                - paragraph [ref=f1e170]: PW Test Space · 5/5 · 11/12/2026
+              - link "View in inbox" [ref=f1e171] [cursor=pointer]:
+                - /url: /dashboard/inbox?space=cmwdbmhmf0001f4yv6fa0g139
+            - listitem [ref=f1e172]:
+              - generic [ref=f1e173]:
+                - paragraph [ref=f1e174]: hoqeu
+                - paragraph [ref=f1e175]: PW Test Space · 2/5 · 11/12/2026
+              - link "View in inbox" [ref=f1e176] [cursor=pointer]:
+                - /url: /dashboard/inbox?space=cmwdbmhmf0001f4yv6fa0g139
+            - listitem [ref=f1e177]:
+              - generic [ref=f1e178]:
+                - paragraph [ref=f1e179]: Farhan
+                - paragraph [ref=f1e180]: PW Test Space · 5/5 · 11/12/2026
+              - link "View in inbox" [ref=f1e181] [cursor=pointer]:
+                - /url: /dashboard/inbox?space=cmwdbmhmf0001f4yv6fa0g139
+            - listitem [ref=f1e182]:
+              - generic [ref=f1e183]:
+                - paragraph [ref=f1e184]: Grace Hopper
+                - paragraph [ref=f1e185]: PW Test Space · 4/5 · 11/12/2026
+              - link "View in inbox" [ref=f1e186] [cursor=pointer]:
+                - /url: /dashboard/inbox?space=cmwdbmhmf0001f4yv6fa0g139
+            - listitem [ref=f1e187]:
+              - generic [ref=f1e188]:
+                - paragraph [ref=f1e189]: Ada Lovelace
+                - paragraph [ref=f1e190]: PW Test Space · 5/5 · 11/12/2026
+              - link "View in inbox" [ref=f1e191] [cursor=pointer]:
+                - /url: /dashboard/inbox?space=cmwdbmhmf0001f4yv6fa0g139
+  - button "Open Next.js Dev Tools" [ref=f1e24] [cursor=pointer]
+  - alert [ref=f1e28]
+  - generic [aria-hidden] [ref=f1e192]: "0"

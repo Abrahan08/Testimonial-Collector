@@ -33,13 +33,11 @@ npx playwright test    # end-to-end tests
 npx prisma migrate dev # create/apply a migration
 npx prisma db seed     # load demo data
 npx prisma studio      # browse the database
-stripe listen --forward-to localhost:3000/api/stripe/webhook   # local webhooks
 ```
 
 ## Environment variables
 Defined in `.env.example` (copy to `.env`). Never commit `.env`.
-`DATABASE_URL`, `AUTH_SECRET`, `APP_URL`, `STRIPE_SECRET_KEY`,
-`STRIPE_WEBHOOK_SECRET`, `STRIPE_PRO_PRICE_ID`.
+`DATABASE_URL`, `AUTH_SECRET`, `APP_URL`.
 
 ## Project layout
 ```
@@ -48,7 +46,7 @@ app/(auth)           login, signup, reset password
 app/dashboard        owner area: overview, spaces, inbox, embed, billing, settings
 app/s/[slug]         public testimonial submission page
 app/embed/[slug]     embeddable widget page (iframe target)
-app/api              route handlers, including stripe/webhook
+app/api              route handlers
 public/embed.js      script that injects the embed iframe
 lib/plans.ts         PLAN_LIMITS, the single source of plan numbers
 lib/                 db client, auth helpers, validators (Zod), stripe helpers
@@ -67,8 +65,9 @@ docs/                PRD.md (requirements), data-model.md (schema design)
 3. **Validate all input with Zod** on the server, including the public form.
 4. **Public output never includes** customer emails or the consent flag. Public pages
    and the embed show only testimonials that are not hidden and have consent = true.
-5. **Stripe:** the webhook is the source of truth for plan status, not the success
-   redirect. Verify signatures and keep handlers idempotent (StripeEvent table).
+5. **Billing is a demo.** Plan changes happen only in server actions that take the
+   user from the session. Never accept a plan or status from the client, and never
+   store or log card data.
 6. **Render testimonial text as plain text.** Never use `dangerouslySetInnerHTML`
    for user content.
 7. **No secrets in code or commits.** Use environment variables.

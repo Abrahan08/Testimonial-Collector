@@ -1,0 +1,58 @@
+- generic [ref=f1e1]:
+  - generic [ref=f1e2]:
+    - banner [ref=f1e3]:
+      - navigation [ref=f1e4]:
+        - link "Testimonial Collector" [ref=f1e5] [cursor=pointer]:
+          - /url: /dashboard
+        - link "Dashboard" [ref=f1e6] [cursor=pointer]:
+          - /url: /dashboard
+        - link "Spaces" [active] [ref=f1e7] [cursor=pointer]:
+          - /url: /dashboard/spaces
+        - link "Inbox" [ref=f1e8] [cursor=pointer]:
+          - /url: /dashboard/inbox
+        - link "Embed" [ref=f1e9] [cursor=pointer]:
+          - /url: /dashboard/embed
+        - link "Billing" [ref=f1e10] [cursor=pointer]:
+          - /url: /dashboard/billing
+      - generic [ref=f1e11]:
+        - generic [ref=f1e12]: Throwaway Tester
+        - button "Log out" [ref=f1e14]
+    - main [ref=f1e193]:
+      - generic [ref=f1e194]:
+        - heading "Spaces" [level=1] [ref=f1e195]
+        - link "New space" [ref=f1e196] [cursor=pointer]:
+          - /url: /dashboard/spaces/new
+      - generic [ref=f1e197]:
+        - generic [ref=f1e198]:
+          - generic [ref=f1e199]: Verify Empty Space
+          - generic [ref=f1e201]:
+            - generic [ref=f1e202]:
+              - generic [ref=f1e203]:
+                - term [ref=f1e204]: Testimonials
+                - definition [ref=f1e205]: "0"
+              - generic [ref=f1e206]:
+                - term [ref=f1e207]: Created
+                - definition [ref=f1e208]: Nov 12, 2026
+            - paragraph [ref=f1e209]: http://localhost:3000/s/verify-empty-space-5f8y2e
+            - generic [ref=f1e210]:
+              - link "Edit" [ref=f1e211] [cursor=pointer]:
+                - /url: /dashboard/spaces/cmwdeo1x80006f4yvajj2d1bc/edit
+              - button "Delete" [ref=f1e212]
+        - generic [ref=f1e213]:
+          - generic [ref=f1e214]: PW Test Space
+          - generic [ref=f1e216]:
+            - generic [ref=f1e217]:
+              - generic [ref=f1e218]:
+                - term [ref=f1e219]: Testimonials
+                - definition [ref=f1e220]: "28"
+              - generic [ref=f1e221]:
+                - term [ref=f1e222]: Created
+                - definition [ref=f1e223]: Nov 12, 2026
+            - paragraph [ref=f1e224]: http://localhost:3000/s/pw-test-space-xr9cz8
+            - generic [ref=f1e225]:
+              - link "Edit" [ref=f1e226] [cursor=pointer]:
+                - /url: /dashboard/spaces/cmwdbmhmf0001f4yv6fa0g139/edit
+              - button "Delete" [ref=f1e227]
+  - button "Open Next.js Dev Tools" [ref=f1e24] [cursor=pointer]
+  - alert [ref=f1e28]: Spaces
+  - generic [aria-hidden] [ref=f1e192]: "0"

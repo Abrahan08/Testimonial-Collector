@@ -1,0 +1,49 @@
+- generic [ref=f1e1]:
+  - generic [ref=f1e2]:
+    - banner [ref=f1e3]:
+      - navigation [ref=f1e4]:
+        - link "Testimonial Collector" [ref=f1e5] [cursor=pointer]:
+          - /url: /dashboard
+        - link "Dashboard" [ref=f1e6] [cursor=pointer]:
+          - /url: /dashboard
+        - link "Spaces" [ref=f1e7] [cursor=pointer]:
+          - /url: /dashboard/spaces
+        - link "Inbox" [active] [ref=f1e8] [cursor=pointer]:
+          - /url: /dashboard/inbox
+        - link "Embed" [ref=f1e9] [cursor=pointer]:
+          - /url: /dashboard/embed
+        - link "Billing" [ref=f1e10] [cursor=pointer]:
+          - /url: /dashboard/billing
+      - generic [ref=f1e11]:
+        - generic [ref=f1e12]: Throwaway Tester
+        - button "Log out" [ref=f1e14]
+    - main [ref=f1e228]:
+      - heading "Inbox" [level=1] [ref=f1e229]
+      - generic [ref=f1e230]:
+        - generic [ref=f1e231]:
+          - generic [ref=f1e232]:
+            - generic [ref=f1e233]: Space
+            - combobox "Space" [ref=f1e234]:
+              - option "Verify Empty Space" [selected]
+              - option "PW Test Space"
+          - generic [ref=f1e235]:
+            - searchbox "Search by name or text" [ref=f1e236]
+            - button "Search" [ref=f1e237]
+        - navigation "Status filter" [ref=f1e238]:
+          - link "All" [ref=f1e239] [cursor=pointer]:
+            - /url: /dashboard/inbox?space=cmwdeo1x80006f4yvajj2d1bc
+          - link "Favorites" [ref=f1e240] [cursor=pointer]:
+            - /url: /dashboard/inbox?space=cmwdeo1x80006f4yvajj2d1bc&status=favorites
+          - link "Wall of Love" [ref=f1e241] [cursor=pointer]:
+            - /url: /dashboard/inbox?space=cmwdeo1x80006f4yvajj2d1bc&status=wall
+          - link "Hidden" [ref=f1e242] [cursor=pointer]:
+            - /url: /dashboard/inbox?space=cmwdeo1x80006f4yvajj2d1bc&status=hidden
+      - generic [ref=f1e243]:
+        - paragraph [ref=f1e244]: No testimonials yet
+        - paragraph [ref=f1e245]: Share your public link to start collecting them.
+        - generic [ref=f1e246]:
+          - code [ref=f1e247]: http://localhost:3000/s/verify-empty-space-5f8y2e
+          - button "Copy" [ref=f1e248]
+  - button "Open Next.js Dev Tools" [ref=f1e24] [cursor=pointer]
+  - alert [ref=f1e28]: Inbox
+  - generic [aria-hidden] [ref=f1e192]: "0"
