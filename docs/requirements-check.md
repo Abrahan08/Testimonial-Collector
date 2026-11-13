@@ -34,8 +34,8 @@ Test accounts `audit-a-*@example.com` and `audit-b-*@example.com` (several from 
 | --- | --- | --- |
 | 2: Free 3 spaces / 100 per space, Pro 25 / 1,000 | Done | `lib/plans.ts` (`PLAN_LIMITS`), `lib/limits.ts`; dashboard showed "1 of 25 spaces" after upgrade |
 | 2: Limits enforced server-side | Done | `app/dashboard/spaces/actions.ts` (owner row locked, count, 403 state); `app/s/[slug]/actions.ts` (space locked, 409 state) |
-| 2: Free plan shows "Powered by" badge on public page and embed; Pro removes it | Missing | No "Powered by" anywhere in `app/`, `components/`, `public/`. Playwright checks 1 and 3 show none |
-| 2: Space limit blocks creation and shows an upgrade prompt | Partial | Blocked with message and "Upgrade to Pro" link, but only after submitting the form (`space-form.tsx`). "New space" does not open a prompt first |
+| 2: Free plan shows "Powered by" badge on public page and embed; Pro removes it | Done | `lib/powered-by.ts` (`shouldShowPoweredBy`, tested), `components/powered-by-badge.tsx`, `app/s/[slug]/page.tsx`, `testimonial-wall.tsx` (`poweredBy`). Owner plan is read from the database. Checked in a browser: shown on `/s/<slug>` and `/embed/<slug>` for a Free owner, not shown on an empty embed, gone after the mock upgrade (the embed after its ~60s cache refreshed) |
+| 2: Space limit blocks creation and shows an upgrade prompt | Done | `app/dashboard/spaces/new/page.tsx` shows the prompt instead of the form when `canCreateSpace` is false, with an "Upgrade to Pro" link to `/dashboard/billing` (Free) or a "delete a space" hint (Pro at 25). Server action still rejects (`spaces/actions.ts`). Checked in a browser with a Free account at 3 spaces |
 | 2: Testimonial limit: public page says "not accepting responses right now" | Done | `lib/limits.ts` `CLOSED_MESSAGE`; `app/s/[slug]/page.tsx` renders `ClosedNotice` |
 | 2: Pro cancel keeps data; over-limit items become read-only | Partial | Nothing is deleted (`lib/billing.ts` `applyCancel`). Read-only is only a warning in `cancel-button.tsx`; spaces beyond 3 can still be edited and managed. Cancel drops to Free immediately (see 5.7) |
 | 5.1: Sign up, log in, log out; unique email | Done | `app/(auth)/actions.ts`; duplicate email handled via `USER_ALREADY_EXISTS`; Playwright 1 |
@@ -63,7 +63,7 @@ Test accounts `audit-a-*@example.com` and `audit-b-*@example.com` (several from 
 | 5.4: No login, mobile-first | Done | Single-column `max-w-xl` layout in `app/s/[slug]/page.tsx`; Playwright 1. Mobile viewport not tested |
 | 5.4: Title, subtitle, ask, fields with required validation, rating, text, consent checkbox | Done | `components/space/public-form-view.tsx`. Consent label reads "shared publicly" without the PRD's "/ on social media" |
 | 5.4: Funny confirmation with message and local meme GIF, fallback to message | Done | `public-form-client.tsx`, `lib/funny-messages.ts`; Playwright 2 showed message and image. Only one GIF in `public/gifs/` (PRD says "a few") |
-| 5.4: Anti-spam: honeypot, per-IP rate limit, server validation, max length | Done | `app/s/[slug]/actions.ts`, `lib/rate-limit.ts`, 1,000-char cap. Rate-limit store is in memory per process, so it will not hold across multiple server instances |
+| 5.4: Anti-spam: honeypot, per-IP rate limit, server validation, max length | Done | `app/s/[slug]/actions.ts`, `lib/rate-limit.ts`, 1,000-char cap. Rate-limit store is in memory per process, so it will not hold across multiple server instances. Now commented in `actions.ts` and `lib/rate-limit.ts` that it resets on restart; honeypot has a unit test (`app/s/[slug]/actions.test.ts`). Not changed: clients without proxy headers share one `ip:unknown` bucket |
 | 5.4 / 5.3: Profile photo upload (JPG/PNG/WebP, max 2 MB) | Missing | `public-form-view.tsx` comment: "photo is left out of the public form until uploads are built"; no upload library; `photoUrl` is read in the inbox but never written; `.env.example` has no upload variables |
 | 5.5: Inbox per space with space selector | Done | `app/dashboard/inbox/page.tsx`, `inbox-filters.tsx` |
 | 5.5: Favorite (star), pinned to top | Done | `testimonial-row.tsx`, `lib/inbox-query.ts` `buildInboxOrder` |
@@ -90,20 +90,20 @@ Test accounts `audit-a-*@example.com` and `audit-b-*@example.com` (several from 
 | 5.9: No spaces yet → "Create your first space" | Done | `app/dashboard/page.tsx`; Playwright 1 |
 | 5.9: Space has no testimonials → inbox empty state with link and copy | Done | `app/dashboard/inbox/page.tsx` (code only; not driven in Playwright) |
 | 5.9: Embed with nothing → preview "No testimonials yet", live widget renders nothing | Done | `embed-builder.tsx` `emptyMessage`; `testimonial-wall.tsx` returns `null` without it |
-| 5.9: Space limit → upgrade prompt; server rejects with 403 | Partial | Server rejects (403 in action state, `spaces/actions.ts`; Server Actions cannot set an HTTP status). Prompt appears after submit, not on "New space" |
-| 5.9: Testimonial limit → warning at 90% and 100%, public message, 409 | Done | `lib/inbox-query.ts` `countWarning`, `inbox/page.tsx`; `s/[slug]/page.tsx`; 409 in action state |
-| 5.9: Unknown or deleted slug → friendly 404 | Partial | Friendly pages exist (`app/s/[slug]/not-found.tsx`, `app/embed/[slug]/not-found.tsx`) but the dev server answered HTTP 200 for both. Foreign dashboard ids show the default Next 404 text |
+| 5.9: Space limit → upgrade prompt; server rejects with 403 | Done | Server rejects (403 in action state, `spaces/actions.ts`; Server Actions cannot set an HTTP status). "New space" now shows the upgrade prompt first (`spaces/new/page.tsx`) |
+| 5.9: Testimonial limit → warning at 90% and 100%, public message, 409 | Done | `lib/inbox-query.ts` `countWarning`, `inbox/page.tsx`; `s/[slug]/page.tsx`; 409 in action state. The inbox banner now has an "Upgrade to Pro" link to `/dashboard/billing` for Free owners (code only; not driven in a browser, since it needs 90 testimonials) |
+| 5.9: Unknown or deleted slug → friendly 404 | Partial | Friendly pages (`app/s/[slug]/not-found.tsx`, `app/embed/[slug]/not-found.tsx`) verified in a browser: no stack trace. HTTP status stays 200 by decision: with `cacheComponents` Next sends the shell before the lookup (Next adds `noindex`). Foreign dashboard ids still show the default Next 404 text (outside this batch) |
 | 5.9: Invalid input → inline per-field errors, client and server | Done | `public-form-view.tsx`, `space-form.tsx`, auth forms, Zod schemas in `lib/validators/` |
 | 5.9: Submit failed / rate limited → friendly retry, text preserved | Done | `app/s/[slug]/actions.ts` returns 429/500 messages and echoes `values` |
 | 5.9: Photo upload failed → clear message | Missing | No upload exists |
-| 5.9: Unexpected error → error boundary with retry | Missing | No `error.tsx` or `global-error.tsx` anywhere under `app/` |
+| 5.9: Unexpected error → error boundary with retry | Done | `app/error.tsx` and `app/global-error.tsx`: friendly message and "Try again", no error details rendered. `error.tsx` checked in a browser with a temporary throwing route (since removed); `global-error.tsx` not triggered in a browser |
 | 9: Sign up, create space, public link within a minute | Done | Playwright 1 |
 | 9: Customer submits without login; appears in inbox | Done | Playwright 2 |
 | 9: Favorite, wall-of-love, edit, hide, delete work and persist | Done | `app/dashboard/inbox/actions.ts`, `actions.test.ts`. Not driven in a browser here |
 | 9: Embed renders on an external page, script and iframe, both styles | Done | `embed-demo/index.html`, `public/embed.js`, `testimonial-wall.tsx`. This audit only loaded `/embed/<slug>` directly (masonry default) |
 | 9: Free blocked at 3 spaces and 100 testimonials; Stripe test payment makes Pro (25 / 1,000) | Changed | Limits and mock upgrade work (`lib/limits.test.ts`, Playwright 4); payment is the demo flow, not Stripe test mode |
 | 9: Billing and dashboard reflect plan after return | Done | Playwright 4 |
-| 9: Every state in 5.9 implemented and reachable | Partial | Missing: error boundary, photo upload failure. Partial: space-limit prompt, 404 status |
+| 9: Every state in 5.9 implemented and reachable | Partial | Missing: photo upload failure. Partial: 404 status (HTTP 200 by decision) |
 | 9: Automated tests for plan limits and Stripe webhook handling | Partial | Plan limits covered (`lib/limits.test.ts`, `lib/plans.test.ts`, `lib/billing.test.ts`). No webhook, so no webhook tests. No Playwright specs in the repo |
 | 9: Works on mobile and desktop, no console errors, clean production build | Partial | Build passes. Mobile viewport and console errors were not checked |
 | 9: Seed data, `.env.example`, README (local setup, Stripe CLI webhook testing) | Partial | `prisma/seed.ts` and `.env.example` exist. README is out of date ("No migrations have been created yet", auth variables "not needed"), does not mention `npx prisma db seed`, and has no Stripe CLI section (Stripe not used) |
@@ -114,14 +114,14 @@ Ordered by importance:
 
 1. **Password reset (5.1)**: Missing. No forgot or reset flow and no email provider, so a user who forgets a password is locked out.
 2. **Account settings (5.1)**: Missing. No edit name, change password or delete account (the delete flow is also the only way for a user to remove their data).
-3. **Free-plan "Powered by" badge (2)**: Missing on the public page and the embed. Pro has no visible benefit on these surfaces.
-4. **Error boundary (5.9)**: Missing. No `error.tsx` or `global-error.tsx`, so an unexpected error has no retry screen.
+3. ~~**Free-plan "Powered by" badge (2)**~~: Fixed in batch A.
+4. ~~**Error boundary (5.9)**~~: Fixed in batch A.
 5. **Profile photo upload (5.3, 5.4, 5.9)**: Missing. The photo switch exists in the space form but does nothing; the failed-upload message does not exist.
-6. **Unknown slug 404 (5.9)**: Partial. Friendly pages exist but return HTTP 200 on the running server.
-7. **Space-limit upgrade prompt (2, 5.9)**: Partial. Shown only after submitting the form, not when clicking "New space".
+6. **Unknown slug 404 (5.9)**: Partial. Friendly pages verified; HTTP 200 kept by decision (Next streaming with `cacheComponents`).
+7. ~~**Space-limit upgrade prompt (2, 5.9)**~~: Fixed in batch A.
 8. **Toasts (5.8)**: Partial. No toast library; many actions give no success feedback.
 9. **Read-only over limit after cancel (2)**: Partial. Only a warning text; nothing is enforced.
 10. **QR code on the success page (5.3)**: Missing (nice to have).
 11. **Tests and README (9)**: Partial. No webhook tests (no webhook), no Playwright specs, README out of date, no seed instructions.
 12. **Mobile and console-error check (9)**: Not verified in this audit.
-13. **Rate limiting (5.4)**: Works, but the store is in memory per process, so it will not hold across multiple server instances.
+13. **Rate limiting (5.4)**: Works. The store is in memory per process (now documented in code as resetting on restart), so it will not hold across multiple server instances.

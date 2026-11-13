@@ -91,6 +91,8 @@ export async function submitTestimonialAction(
   const ip = await clientIp();
   // Three independent windows (CLAUDE.md rule 8): per IP per space (5/h, the spec),
   // per IP across all spaces, and per space across all IPs.
+  // NOTE: submissionStore is in memory, so these counters reset when the server restarts
+  // and are not shared between instances (see lib/rate-limit.ts).
   const now = Date.now();
   const hour = 60 * 60 * 1000;
   const allowed = checkRateLimits(submissionStore, now, [

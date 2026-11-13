@@ -2,9 +2,11 @@ import { readdir } from "node:fs/promises";
 import path from "node:path";
 import { Suspense } from "react";
 import { notFound } from "next/navigation";
+import { PoweredByBadge } from "@/components/powered-by-badge";
 import { ClosedNotice, PublicFormClient } from "@/components/space/public-form-client";
 import { db } from "@/lib/db";
 import { CLOSED_MESSAGE, canAcceptTestimonial } from "@/lib/limits";
+import { shouldShowPoweredBy } from "@/lib/powered-by";
 import { spaceFieldsSchema } from "@/lib/validators/space";
 import { submitTestimonialAction } from "./actions";
 
@@ -44,22 +46,32 @@ async function PublicSpace({ params }: { params: Promise<{ slug: string }> }) {
   if (!fields.success) notFound();
 
   const count = await db.testimonial.count({ where: { spaceId: space.id } });
+  // Free-plan owners get the "Powered by" badge (PRD 2); the plan comes from the database.
+  const badge = shouldShowPoweredBy(space.owner.plan) ? <PoweredByBadge /> : null;
   if (!canAcceptTestimonial(space.owner.plan, count)) {
-    return <ClosedNotice message={CLOSED_MESSAGE} theme={space.theme} />;
+    return (
+      <>
+        <ClosedNotice message={CLOSED_MESSAGE} theme={space.theme} />
+        {badge}
+      </>
+    );
   }
 
   return (
-    <PublicFormClient
-      title={space.title}
-      subtitle={space.subtitle}
-      ask={space.ask}
-      collectRating={space.collectRating}
-      theme={space.theme}
-      fields={fields.data}
-      gifs={await listGifs()}
-      action={submitTestimonialAction.bind(null, slug)}
-      closedMessage={CLOSED_MESSAGE}
-    />
+    <>
+      <PublicFormClient
+        title={space.title}
+        subtitle={space.subtitle}
+        ask={space.ask}
+        collectRating={space.collectRating}
+        theme={space.theme}
+        fields={fields.data}
+        gifs={await listGifs()}
+        action={submitTestimonialAction.bind(null, slug)}
+        closedMessage={CLOSED_MESSAGE}
+      />
+      {badge}
+    </>
   );
 }
 

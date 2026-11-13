@@ -1,5 +1,12 @@
 import { describe, expect, it } from "vitest";
-import { canAcceptTestimonial, canCreateSpace } from "./limits";
+import { canAcceptTestimonial, canCreateSpace, canUpgrade } from "./limits";
+
+describe("canUpgrade", () => {
+  it("free can upgrade, pro cannot", () => {
+    expect(canUpgrade("free")).toBe(true);
+    expect(canUpgrade("pro")).toBe(false);
+  });
+});
 
 describe("canCreateSpace", () => {
   it("free: allows below 3, blocks at and above 3", () => {
