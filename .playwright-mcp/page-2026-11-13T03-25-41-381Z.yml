@@ -1,0 +1,26 @@
+- generic [active] [ref=f5e1]:
+  - generic [ref=f5e2]:
+    - banner [ref=f5e3]:
+      - navigation [ref=f5e4]:
+        - link "Testimonial Collector" [ref=f5e5] [cursor=pointer]:
+          - /url: /dashboard
+        - link "Spaces" [ref=f5e6] [cursor=pointer]:
+          - /url: /dashboard/spaces
+        - link "Inbox" [ref=f5e7] [cursor=pointer]:
+          - /url: /dashboard/inbox
+      - generic [ref=f5e121]:
+        - generic [ref=f5e122]: Demo Tester
+        - button "Log out" [ref=f5e124]
+    - main [ref=f5e127]:
+      - generic [ref=f5e128]:
+        - generic [ref=f5e129]:
+          - generic [ref=f5e130]: Your space is ready
+          - generic [ref=f5e131]: Share this link to start collecting testimonials for Demo space 2.
+        - generic [ref=f5e132]:
+          - generic [ref=f5e133]:
+            - code [ref=f5e134]: http://localhost:3002/s/demo-space-2-r16x89
+            - button "Copy" [ref=f5e135]
+          - link "Back to spaces" [ref=f5e136] [cursor=pointer]:
+            - /url: /dashboard/spaces
+  - button "Open Next.js Dev Tools" [ref=f5e116] [cursor=pointer]
+  - alert [ref=f5e120]

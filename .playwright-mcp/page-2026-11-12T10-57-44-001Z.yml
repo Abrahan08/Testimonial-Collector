@@ -1,0 +1,39 @@
+- generic [active] [ref=f4e1]:
+  - generic [ref=f4e2]:
+    - banner [ref=f4e3]:
+      - navigation [ref=f4e4]:
+        - link "Testimonial Collector" [ref=f4e5] [cursor=pointer]:
+          - /url: /dashboard
+        - link "Spaces" [ref=f4e6] [cursor=pointer]:
+          - /url: /dashboard/spaces
+        - link "Inbox" [ref=f4e7] [cursor=pointer]:
+          - /url: /dashboard/inbox
+      - generic [ref=f4e8]:
+        - generic [ref=f4e9]: Demo Tester
+        - button "Log out" [ref=f4e11]
+    - main [ref=f4e45]:
+      - heading "Checkout" [level=1] [ref=f4e46]
+      - generic [ref=f4e47]:
+        - generic [ref=f4e48]:
+          - generic [ref=f4e49]: Pro, $9.99/month
+          - generic [ref=f4e50]: "Demo billing: no real payments are made."
+        - generic [ref=f4e51]:
+          - alert [ref=f4e52]: Demo only. Do not enter a real card number.
+          - generic [ref=f4e53]:
+            - generic [ref=f4e54]: Name on card
+            - textbox "Name on card" [ref=f4e55]
+          - generic [ref=f4e56]:
+            - generic [ref=f4e57]: Card number
+            - textbox "Card number" [ref=f4e58]:
+              - /placeholder: Any value works
+          - generic [ref=f4e59]:
+            - generic [ref=f4e60]:
+              - generic [ref=f4e61]: Expiry
+              - textbox "Expiry" [ref=f4e62]:
+                - /placeholder: MM/YY
+            - generic [ref=f4e63]:
+              - generic [ref=f4e64]: CVC
+              - textbox "CVC" [ref=f4e65]
+          - button "Pay $9.99 (demo)" [ref=f4e66]
+  - button "Open Next.js Dev Tools" [ref=f4e20] [cursor=pointer]
+  - alert [ref=f4e24]: Checkout

@@ -1,0 +1,66 @@
+- generic [active] [ref=f8e1]:
+  - generic [ref=f8e2]:
+    - banner [ref=f8e3]:
+      - navigation [ref=f8e4]:
+        - link "Testimonial Collector" [ref=f8e5] [cursor=pointer]:
+          - /url: /dashboard
+        - link "Spaces" [ref=f8e6] [cursor=pointer]:
+          - /url: /dashboard/spaces
+        - link "Inbox" [ref=f8e7] [cursor=pointer]:
+          - /url: /dashboard/inbox
+      - generic [ref=f8e8]:
+        - generic [ref=f8e9]: Demo Tester
+        - button "Log out" [ref=f8e11]
+    - main [ref=f8e13]:
+      - generic [ref=f8e14]:
+        - heading "Spaces" [level=1] [ref=f8e15]
+        - link "New space" [ref=f8e16] [cursor=pointer]:
+          - /url: /dashboard/spaces/new
+      - generic [ref=f8e17]:
+        - generic [ref=f8e18]:
+          - generic [ref=f8e19]: Demo space 3
+          - generic [ref=f8e21]:
+            - generic [ref=f8e22]:
+              - generic [ref=f8e23]:
+                - term [ref=f8e24]: Testimonials
+                - definition [ref=f8e25]: "0"
+              - generic [ref=f8e26]:
+                - term [ref=f8e27]: Created
+                - definition [ref=f8e28]: Nov 13, 2026
+            - paragraph [ref=f8e29]: http://localhost:3002/s/demo-space-3-l793hl
+            - generic [ref=f8e30]:
+              - link "Edit" [ref=f8e31] [cursor=pointer]:
+                - /url: /dashboard/spaces/cmweeznik0003ucyvedvu6b3u/edit
+              - button "Delete" [ref=f8e32]
+        - generic [ref=f8e33]:
+          - generic [ref=f8e34]: Demo space 2
+          - generic [ref=f8e36]:
+            - generic [ref=f8e37]:
+              - generic [ref=f8e38]:
+                - term [ref=f8e39]: Testimonials
+                - definition [ref=f8e40]: "0"
+              - generic [ref=f8e41]:
+                - term [ref=f8e42]: Created
+                - definition [ref=f8e43]: Nov 13, 2026
+            - paragraph [ref=f8e44]: http://localhost:3002/s/demo-space-2-r16x89
+            - generic [ref=f8e45]:
+              - link "Edit" [ref=f8e46] [cursor=pointer]:
+                - /url: /dashboard/spaces/cmweezfqy0002ucyvkhhw931w/edit
+              - button "Delete" [ref=f8e47]
+        - generic [ref=f8e48]:
+          - generic [ref=f8e49]: Demo Tester
+          - generic [ref=f8e51]:
+            - generic [ref=f8e52]:
+              - generic [ref=f8e53]:
+                - term [ref=f8e54]: Testimonials
+                - definition [ref=f8e55]: "1"
+              - generic [ref=f8e56]:
+                - term [ref=f8e57]: Created
+                - definition [ref=f8e58]: Nov 12, 2026
+            - paragraph [ref=f8e59]: http://localhost:3002/s/demo-tester-6pa8bz
+            - generic [ref=f8e60]:
+              - link "Edit" [ref=f8e61] [cursor=pointer]:
+                - /url: /dashboard/spaces/cmwdgii2t0000ucyv6c41muvm/edit
+              - button "Delete" [ref=f8e62]
+  - button "Open Next.js Dev Tools" [ref=f8e68] [cursor=pointer]
+  - alert [ref=f8e72]

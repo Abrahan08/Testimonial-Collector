@@ -1,0 +1,21 @@
+- generic [active] [ref=f16e1]:
+  - generic [ref=f16e2]:
+    - banner [ref=f16e3]:
+      - navigation [ref=f16e4]:
+        - link "Testimonial Collector" [ref=f16e5] [cursor=pointer]:
+          - /url: /dashboard
+        - link "Spaces" [ref=f16e6] [cursor=pointer]:
+          - /url: /dashboard/spaces
+        - link "Inbox" [ref=f16e7] [cursor=pointer]:
+          - /url: /dashboard/inbox
+      - generic [ref=f16e8]:
+        - generic [ref=f16e9]: Demo Tester
+        - button "Log out" [ref=f16e11]
+    - main [ref=f16e13]:
+      - generic [ref=f16e14]:
+        - heading "Spaces" [level=1] [ref=f16e15]
+        - link "New space" [ref=f16e16] [cursor=pointer]:
+          - /url: /dashboard/spaces/new
+      - paragraph [ref=f16e17]: Loading...
+  - button "Open Next.js Dev Tools" [ref=f16e23] [cursor=pointer]
+  - alert [ref=f16e27]

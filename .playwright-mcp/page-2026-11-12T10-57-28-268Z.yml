@@ -1,0 +1,26 @@
+- generic [active] [ref=f3e1]:
+  - generic [ref=f3e2]:
+    - banner [ref=f3e3]:
+      - navigation [ref=f3e4]:
+        - link "Testimonial Collector" [ref=f3e5] [cursor=pointer]:
+          - /url: /dashboard
+        - link "Spaces" [ref=f3e6] [cursor=pointer]:
+          - /url: /dashboard/spaces
+        - link "Inbox" [ref=f3e7] [cursor=pointer]:
+          - /url: /dashboard/inbox
+      - generic [ref=f3e8]:
+        - generic [ref=f3e9]: Demo Tester
+        - button "Log out" [ref=f3e11]
+    - main [ref=f3e13]:
+      - heading "Overview" [level=1] [ref=f3e14]
+      - note [ref=f3e15]:
+        - generic [ref=f3e16]: Upgrade to Pro for 25 spaces and 1,000 testimonials per space
+        - link "Upgrade" [ref=f3e17] [cursor=pointer]:
+          - /url: /dashboard/billing
+      - generic [ref=f3e18]:
+        - paragraph [ref=f3e19]: No spaces yet
+        - paragraph [ref=f3e20]: Create a space to start collecting testimonials.
+        - link "Create your first space" [ref=f3e21] [cursor=pointer]:
+          - /url: /dashboard/spaces/new
+  - button "Open Next.js Dev Tools" [ref=f3e27] [cursor=pointer]
+  - alert [ref=f3e31]

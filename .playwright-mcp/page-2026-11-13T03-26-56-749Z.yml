@@ -1,0 +1,40 @@
+- generic:
+  - generic [active]:
+    - generic [ref=f14e3]:
+      - generic [ref=f14e4]:
+        - navigation [ref=f14e6]:
+          - button [disabled] [ref=f14e7]:
+            - img "previous" [ref=f14e8]
+          - generic [ref=f14e10]:
+            - generic [ref=f14e11]: 1/
+            - generic [ref=f14e12]: "1"
+          - button [disabled] [ref=f14e13]:
+            - img "next" [ref=f14e14]
+        - generic [ref=f14e17]:
+          - generic "Latest available version is detected (16.4.6)." [ref=f14e20]: Next.js 16.4.6
+          - generic [ref=f14e21]: Turbopack
+      - dialog "Runtime Error" [ref=f14e23]:
+        - generic [ref=f14e26]:
+          - generic [ref=f14e28]:
+            - generic [ref=f14e29]:
+              - generic [ref=f14e30]: Runtime Error
+              - generic [ref=f14e32]:
+                - button "Copy Error Info" [ref=f14e33] [cursor=pointer]
+                - button "No related documentation found" [disabled] [ref=f14e36]
+                - button "Attach Node.js inspector" [ref=f14e39] [cursor=pointer]
+            - generic [ref=f14e48]: Jest worker encountered 2 child process exceptions, exceeding retry limit
+          - generic [ref=f14e52]:
+            - paragraph [ref=f14e53]:
+              - text: Call Stack
+              - generic [ref=f14e54]: "5"
+            - button "Show 5 ignore-listed frame(s)" [ref=f14e55] [cursor=pointer]
+    - generic [ref=f14e62] [cursor=pointer]:
+      - button "Open Next.js Dev Tools" [ref=f14e63]
+      - generic [ref=f14e67]:
+        - button "Open issues overlay" [ref=f14e68]:
+          - generic [ref=f14e69]:
+            - generic [aria-hidden] [ref=f14e70]: "0"
+            - generic [ref=f14e71]: "1"
+          - generic [ref=f14e72]: Issue
+        - button "Collapse issues badge" [ref=f14e73]
+  - alert [ref=f14e76]
